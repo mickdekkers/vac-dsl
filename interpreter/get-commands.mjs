@@ -1,9 +1,11 @@
+import R from 'ramda'
+
 /**
  * Retrieve the value of an Identifier or Literal
  * @param ids - A map of Identifiers to their values
  * @param idOrLiteral - A node whose type is Identifier or Literal
  */
-const resolveValue = (ids, idOrLiteral) => {
+const resolveValue = R.curry((ids, idOrLiteral) => {
   if (idOrLiteral.type === 'Literal') {
     return idOrLiteral.value
   } else {
@@ -15,6 +17,27 @@ const resolveValue = (ids, idOrLiteral) => {
 
     return value
   }
+})
+
+const resolveConnections = (left, right) => {
+  const connections = []
+
+  left.forEach(l => right.forEach(r => connections.push({ from: l, to: r })))
+
+  return connections
+}
+
+const flattenEdges = edges => {
+  return edges.reduce((acc, el, index) => {
+    const left = el
+    const right = edges[index + 1]
+
+    if (right != null) {
+      acc = acc.concat(resolveConnections(left.nodes, right.nodes))
+    }
+
+    return acc
+  }, [])
 }
 
 /**
@@ -23,31 +46,26 @@ const resolveValue = (ids, idOrLiteral) => {
  */
 export default program => {
   const { commands } = program.body.reduce(
-    (acc, node, index) => {
-      switch (node.type) {
+    (acc, element, index) => {
+      switch (element.type) {
         case 'IdentifierDefinition':
-          acc.ids[node.id.name] = node.value.value
+          acc.ids[element.id.name] = element.value.value
           break
         case 'Comment':
           break
         case 'Edge':
-          try {
-            acc.commands.push({
-              from: resolveValue(acc.ids, node.from),
-              to: resolveValue(acc.ids, node.to)
-            })
-          } catch (error) {
-            // HACK: refactor this, not a good idea
-            if (error instanceof ReferenceError) {
-              error.message += ` at index ${index}`
-            }
-
-            throw error
-          }
+          acc.commands = acc.commands.concat(
+            flattenEdges(element.nodes).map(
+              R.evolve({
+                from: resolveValue(acc.ids),
+                to: resolveValue(acc.ids)
+              })
+            )
+          )
           break
         default:
           throw new Error(
-            `Unknown AST node type ${node.type} at index ${index}`
+            `Unknown AST element type ${element.type} at index ${index}`
           )
       }
 

@@ -4,6 +4,5 @@ vm = "Virtual Mixer (Virtual Audio Cable)"
 speakers = "Acer X34-8 (NVIDIA High Definition Audio)"
 headset = "Realtek Digital Output (Realtek High Definition Audio)"
 
-vd -> vm
-vc -> vm
-vm -> headset
+vd, vc -> vm -> headset
+vc -> speakers
