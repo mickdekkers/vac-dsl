@@ -168,19 +168,53 @@
         })
       },
       {
-        name: 'edge$string$1',
+        name: 'edge$ebnf$1$subexpression$1$string$1',
         symbols: [{ literal: '-' }, { literal: '>' }],
         postprocess: function joiner(d) {
           return d.join('')
         }
       },
       {
+        name: 'edge$ebnf$1$subexpression$1',
+        symbols: [
+          'sl_',
+          'edge$ebnf$1$subexpression$1$string$1',
+          'sl_',
+          'nodeList'
+        ],
+        postprocess: d => d[3]
+      },
+      { name: 'edge$ebnf$1', symbols: ['edge$ebnf$1$subexpression$1'] },
+      {
+        name: 'edge$ebnf$1$subexpression$2$string$1',
+        symbols: [{ literal: '-' }, { literal: '>' }],
+        postprocess: function joiner(d) {
+          return d.join('')
+        }
+      },
+      {
+        name: 'edge$ebnf$1$subexpression$2',
+        symbols: [
+          'sl_',
+          'edge$ebnf$1$subexpression$2$string$1',
+          'sl_',
+          'nodeList'
+        ],
+        postprocess: d => d[3]
+      },
+      {
+        name: 'edge$ebnf$1',
+        symbols: ['edge$ebnf$1', 'edge$ebnf$1$subexpression$2'],
+        postprocess: function arrpush(d) {
+          return d[0].concat([d[1]])
+        }
+      },
+      {
         name: 'edge',
-        symbols: ['nodeList', 'sl_', 'edge$string$1', 'sl_', 'nodeList'],
+        symbols: ['nodeList', 'edge$ebnf$1'],
         postprocess: d => ({
           type: 'Edge',
-          from: d[0],
-          to: d[4]
+          nodes: flatten(d)
         })
       },
       { name: 'nodeList$ebnf$1', symbols: [] },
