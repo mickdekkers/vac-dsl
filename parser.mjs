@@ -4,7 +4,7 @@ import grammar from './grammar'
 export default () => {
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
-  return (input) => {
+  return input => {
     parser.feed(input)
     return parser.results[0]
   }
