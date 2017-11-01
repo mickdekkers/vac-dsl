@@ -27,12 +27,16 @@ comment -> "#" [^\n]:* {% d => ({
   raw: d[0].concat(d[1].join(''))
 }) %}
 
-edge -> node sl_ "->" sl_ node {% d => ({
+edge -> nodeList sl_ "->" sl_ nodeList {% d => ({
   type: "Edge",
-  from: d[0][0],
-  to: d[4][0]
+  from: d[0],
+  to: d[4]
 }) %}
 
+nodeList -> node (sl_ "," sl_ node {% d => d[3][0] %}):* {% d => ({
+  type: 'NodeList',
+  nodes: flatten(d)
+}) %}
 node -> id | literal
 
 idDef -> id sl_ "=" sl_ literal {% d => ({

@@ -141,7 +141,7 @@
         symbols: ['stmt', 'main$ebnf$1', 'main$ebnf$2'],
         postprocess: d => ({
           type: 'Program',
-          body: reject(flatten(d), x => x === '\n'),
+          body: reject(flatten(d), x => x === '\n'), // remove extra newlines
           meta: {
             parser
           }
@@ -176,11 +176,32 @@
       },
       {
         name: 'edge',
-        symbols: ['node', 'sl_', 'edge$string$1', 'sl_', 'node'],
+        symbols: ['nodeList', 'sl_', 'edge$string$1', 'sl_', 'nodeList'],
         postprocess: d => ({
           type: 'Edge',
-          from: d[0][0],
-          to: d[4][0]
+          from: d[0],
+          to: d[4]
+        })
+      },
+      { name: 'nodeList$ebnf$1', symbols: [] },
+      {
+        name: 'nodeList$ebnf$1$subexpression$1',
+        symbols: ['sl_', { literal: ',' }, 'sl_', 'node'],
+        postprocess: d => d[3][0]
+      },
+      {
+        name: 'nodeList$ebnf$1',
+        symbols: ['nodeList$ebnf$1', 'nodeList$ebnf$1$subexpression$1'],
+        postprocess: function arrpush(d) {
+          return d[0].concat([d[1]])
+        }
+      },
+      {
+        name: 'nodeList',
+        symbols: ['node', 'nodeList$ebnf$1'],
+        postprocess: d => ({
+          type: 'NodeList',
+          nodes: flatten(d)
         })
       },
       { name: 'node', symbols: ['id'] },
