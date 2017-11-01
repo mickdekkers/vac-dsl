@@ -12,6 +12,7 @@ const resolveValue = R.curry((ids, idOrLiteral) => {
     const value = ids[idOrLiteral.name]
 
     if (value == null) {
+      // FIXME: maybe don't use ReferenceErrors
       throw new ReferenceError(`${idOrLiteral.name} is not defined`)
     }
 
@@ -19,15 +20,18 @@ const resolveValue = R.curry((ids, idOrLiteral) => {
   }
 })
 
+// TODO: rename these functions
 const resolveConnections = (left, right) => {
   const connections = []
 
+  // TODO: find more fp inspired method of doing this
   left.forEach(l => right.forEach(r => connections.push({ from: l, to: r })))
 
   return connections
 }
 
 const flattenEdges = edges => {
+  // TODO: find more fp inspired method of doing this too
   return edges.reduce((acc, el, index) => {
     const left = el
     const right = edges[index + 1]
@@ -54,6 +58,7 @@ export default program => {
         case 'Comment':
           break
         case 'Edge':
+          // TODO: refactor this
           acc.commands = acc.commands.concat(
             flattenEdges(element.nodes).map(
               R.evolve({
@@ -64,6 +69,7 @@ export default program => {
           )
           break
         default:
+          // TODO: better errors
           throw new Error(
             `Unknown AST element type ${element.type} at index ${index}`
           )

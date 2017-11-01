@@ -10,6 +10,10 @@
 
 @builtin "string.ne"
 
+# TODO: implement lexer to obtain line numbers
+# TODO: capitalize rule name
+# TODO: don't be so iffy about newlines and consider switching whitespace to allow newlines anywhere
+
 main -> stmt ("\n":+ stmt {% d => d[1][0] %}):* "\n":* {% d => ({
   type: "Program",
   body: reject(flatten(d), x => x === '\n'), // remove extra newlines
@@ -27,6 +31,7 @@ comment -> "#" [^\n]:* {% d => ({
   raw: d[0].concat(d[1].join(''))
 }) %}
 
+# TODO: rename this to e.g. edgeList
 edge -> nodeList (sl_ "->" sl_ nodeList {% d => d[3] %}):+ {% d => ({
   type: 'Edge',
   nodes: flatten(d)
