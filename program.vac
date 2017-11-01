@@ -1,0 +1,20 @@
+vd = "Virtual Default (Virtual Audio Cable)"
+vc = "Virtual Chat (Virtual Audio Cable)"
+vm = "Virtual Mixer (Virtual Audio Cable)"
+speakers = "Acer X34-8 (NVIDIA High Definition Audio)"
+headset = "Realtek Digital Output (Realtek High Definition Audio)"
+
+vd -> vm [buffer=100 rate=96000 prio=high]
+vc -> vm
+vm -> headset
+
+/SamplingRate:<num>   Sampling rate (samples per second) 
+/BitsPerSample:<num>  Bits per sample 
+/Channels:<num>       Number of channels 
+/ChanCfg:<str>        Channel configuration 
+/BufferMs:<num>       Total buffering length in milliseconds 
+/Buffers:<num>        Number of buffers (parts of buffering space) 
+/Priority:<str>       Process priority 
+/WindowName:<str>     Name of application instance window 
+/AutoStart            Start audio transfer automatically 
+/CloseInstance:<str>  Close a specified Audio Repeater instance by its window name 

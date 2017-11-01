@@ -1,0 +1,22 @@
+digraph G {
+  subgraph cluster_inputs {
+    label="Inputs"
+    style=dashed
+
+    vd[label="Virtual Default\n(game audio)", shape=invhouse]
+    vc[label="Virtual Chat\n(chat audio)", shape=invhouse]
+  }
+
+  vm[label="Virtual Mixer"]
+
+  subgraph cluster_outputs {
+    label="Outputs"
+    style=dashed
+
+    speakers[label="Speakers", shape=house]
+    headset[label="Headset", shape=house]
+  }
+
+  vd, vc -> vm -> headset
+  vc -> speakers
+}

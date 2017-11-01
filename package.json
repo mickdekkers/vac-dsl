@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "name": "vac-dsl",
+  "version": "0.1.0",
+  "dependencies": {
+    "@std/esm": "^0.12.5",
+    "lodash": "^4.17.4",
+    "nearley": "^2.11.0"
+  }
+}
