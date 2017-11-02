@@ -11,10 +11,6 @@
 @builtin "string.ne"
 @builtin "number.ne"
 
-# TODO: implement lexer to obtain line numbers
-# TODO: capitalize rule name
-# TODO: don't be so iffy about newlines and consider switching whitespace to allow newlines anywhere
-
 Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% d => ({
   type: "Program",
   body: reject(flatten(d), x => x === '\n'), // remove extra newlines
