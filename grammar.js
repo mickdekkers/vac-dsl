@@ -147,7 +147,7 @@
           }
         })
       },
-      { name: 'stmt', symbols: ['edge'] },
+      { name: 'stmt', symbols: ['edgeChain'] },
       { name: 'stmt', symbols: ['idDef'] },
       { name: 'stmt', symbols: ['comment'] },
       { name: 'comment$ebnf$1', symbols: [] },
@@ -168,52 +168,55 @@
         })
       },
       {
-        name: 'edge$ebnf$1$subexpression$1$string$1',
+        name: 'edgeChain$ebnf$1$subexpression$1$string$1',
         symbols: [{ literal: '-' }, { literal: '>' }],
         postprocess: function joiner(d) {
           return d.join('')
         }
       },
       {
-        name: 'edge$ebnf$1$subexpression$1',
+        name: 'edgeChain$ebnf$1$subexpression$1',
         symbols: [
           'sl_',
-          'edge$ebnf$1$subexpression$1$string$1',
+          'edgeChain$ebnf$1$subexpression$1$string$1',
           'sl_',
           'nodeList'
         ],
         postprocess: d => d[3]
       },
-      { name: 'edge$ebnf$1', symbols: ['edge$ebnf$1$subexpression$1'] },
       {
-        name: 'edge$ebnf$1$subexpression$2$string$1',
+        name: 'edgeChain$ebnf$1',
+        symbols: ['edgeChain$ebnf$1$subexpression$1']
+      },
+      {
+        name: 'edgeChain$ebnf$1$subexpression$2$string$1',
         symbols: [{ literal: '-' }, { literal: '>' }],
         postprocess: function joiner(d) {
           return d.join('')
         }
       },
       {
-        name: 'edge$ebnf$1$subexpression$2',
+        name: 'edgeChain$ebnf$1$subexpression$2',
         symbols: [
           'sl_',
-          'edge$ebnf$1$subexpression$2$string$1',
+          'edgeChain$ebnf$1$subexpression$2$string$1',
           'sl_',
           'nodeList'
         ],
         postprocess: d => d[3]
       },
       {
-        name: 'edge$ebnf$1',
-        symbols: ['edge$ebnf$1', 'edge$ebnf$1$subexpression$2'],
+        name: 'edgeChain$ebnf$1',
+        symbols: ['edgeChain$ebnf$1', 'edgeChain$ebnf$1$subexpression$2'],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'edge',
-        symbols: ['nodeList', 'edge$ebnf$1'],
+        name: 'edgeChain',
+        symbols: ['nodeList', 'edgeChain$ebnf$1'],
         postprocess: d => ({
-          type: 'Edge',
+          type: 'EdgeChain',
           nodes: flatten(d)
         })
       },

@@ -29,6 +29,17 @@ const flattenEdges = R.pipe(
   R.unnest
 )
 
+// TODO: refactor this
+const resolveEdgeChainCommands = R.curry((ids, edgeChain) => {
+  const nodes = edgeChain.nodes
+  return flattenEdges(nodes).map(
+    R.evolve({
+      from: resolveValue(ids),
+      to: resolveValue(ids)
+    })
+  )
+})
+
 /**
  * Retrieve a list of connections to make from a vac-dsl program
  * @param program - The AST of a vac-dsl program
@@ -42,16 +53,9 @@ export default program => {
           break
         case 'Comment':
           break
-        case 'Edge':
-          // TODO: refactor this
-          acc.commands = acc.commands.concat(
-            flattenEdges(element.nodes).map(
-              R.evolve({
-                from: resolveValue(acc.ids),
-                to: resolveValue(acc.ids)
-              })
-            )
-          )
+        case 'EdgeChain':
+          const edgeChainCommands = resolveEdgeChainCommands(acc.ids, element)
+          acc.commands = acc.commands.concat(edgeChainCommands)
           break
         default:
           // TODO: better errors

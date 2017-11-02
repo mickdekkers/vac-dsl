@@ -22,7 +22,7 @@ main -> stmt ("\n":+ stmt {% d => d[1][0] %}):* "\n":* {% d => ({
   }
 }) %}
 
-stmt -> edge | idDef | comment
+stmt -> edgeChain | idDef | comment
 
 # TODO: multiline comments
 comment -> "#" [^\n]:* {% d => ({
@@ -31,9 +31,8 @@ comment -> "#" [^\n]:* {% d => ({
   raw: d[0].concat(d[1].join(''))
 }) %}
 
-# TODO: rename this to e.g. edgeList
-edge -> nodeList (sl_ "->" sl_ nodeList {% d => d[3] %}):+ {% d => ({
-  type: 'Edge',
+edgeChain -> nodeList (sl_ "->" sl_ nodeList {% d => d[3] %}):+ {% d => ({
+  type: 'EdgeChain',
   nodes: flatten(d)
 }) %}
 
