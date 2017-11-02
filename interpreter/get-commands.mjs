@@ -1,4 +1,5 @@
 import R from 'ramda'
+import changeCase from 'change-case'
 import { getCombinationsWith, combineAdjacentWith } from '../utils'
 
 /**
@@ -29,14 +30,29 @@ const flattenEdges = R.pipe(
   R.unnest
 )
 
+const applyProperties = R.curry((properties, command) => {
+  const props = properties
+    ? properties.reduce(
+        (acc, prop) => (
+          (acc[changeCase.pascalCase(prop.name)] = prop.value), acc
+        ),
+        {}
+      )
+    : {}
+  return R.assoc('properties', props, command)
+})
+
 // TODO: refactor this
 const resolveEdgeChainCommands = R.curry((variables, edgeChain) => {
-  const nodes = edgeChain.nodeLists
-  return flattenEdges(nodes).map(
-    R.evolve({
-      from: resolveValue(variables),
-      to: resolveValue(variables)
-    })
+  const { properties: { properties }, nodeLists } = edgeChain
+  return flattenEdges(nodeLists).map(
+    R.pipe(
+      R.evolve({
+        from: resolveValue(variables),
+        to: resolveValue(variables)
+      }),
+      applyProperties(properties)
+    )
   )
 })
 
