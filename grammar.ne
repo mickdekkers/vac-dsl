@@ -22,9 +22,10 @@ main -> stmt ("\n":+ stmt {% d => d[1][0] %}):* "\n":* {% d => ({
   }
 }) %}
 
+# TODO: allow comment after statement
 stmt -> edgeChain | idDef | comment
 
-# TODO: multiline comments
+# TODO: multiline comments?
 comment -> "#" [^\n]:* {% d => ({
   type: "Comment",
   value: d[1].join('').trim(),
@@ -33,7 +34,7 @@ comment -> "#" [^\n]:* {% d => ({
 
 edgeChain -> nodeList (sl_ "->" sl_ nodeList {% d => d[3] %}):+ {% d => ({
   type: 'EdgeChain',
-  nodes: flatten(d)
+  nodeLists: flatten(d)
 }) %}
 
 nodeList -> node (sl_ "," sl_ node {% d => d[3][0] %}):* {% d => ({

@@ -31,7 +31,7 @@ const flattenEdges = R.pipe(
 
 // TODO: refactor this
 const resolveEdgeChainCommands = R.curry((ids, edgeChain) => {
-  const nodes = edgeChain.nodes
+  const nodes = edgeChain.nodeLists
   return flattenEdges(nodes).map(
     R.evolve({
       from: resolveValue(ids),

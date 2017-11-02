@@ -217,7 +217,7 @@
         symbols: ['nodeList', 'edgeChain$ebnf$1'],
         postprocess: d => ({
           type: 'EdgeChain',
-          nodes: flatten(d)
+          nodeLists: flatten(d)
         })
       },
       { name: 'nodeList$ebnf$1', symbols: [] },
