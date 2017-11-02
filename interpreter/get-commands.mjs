@@ -3,14 +3,14 @@ import { getCombinationsWith, combineAdjacentWith } from '../utils'
 
 /**
  * Retrieve the value of an Identifier or Literal
- * @param ids - A map of Identifiers to their values
+ * @param variables - A map of variables and their values
  * @param idOrLiteral - A node whose type is Identifier or Literal
  */
-const resolveValue = R.curry((ids, idOrLiteral) => {
+const resolveValue = R.curry((variables, idOrLiteral) => {
   if (idOrLiteral.type === 'Literal') {
     return idOrLiteral.value
   } else {
-    const value = ids[idOrLiteral.name]
+    const value = variables[idOrLiteral.name]
 
     if (value == null) {
       // FIXME: maybe don't use ReferenceErrors
@@ -30,12 +30,12 @@ const flattenEdges = R.pipe(
 )
 
 // TODO: refactor this
-const resolveEdgeChainCommands = R.curry((ids, edgeChain) => {
+const resolveEdgeChainCommands = R.curry((variables, edgeChain) => {
   const nodes = edgeChain.nodeLists
   return flattenEdges(nodes).map(
     R.evolve({
-      from: resolveValue(ids),
-      to: resolveValue(ids)
+      from: resolveValue(variables),
+      to: resolveValue(variables)
     })
   )
 })
@@ -48,13 +48,16 @@ export default program => {
   const { commands } = program.body.reduce(
     (acc, element, index) => {
       switch (element.type) {
-        case 'IdentifierDefinition':
-          acc.ids[element.id.name] = element.value.value
+        case 'VariableDefinition':
+          acc.variables[element.id.name] = element.value.value
           break
         case 'Comment':
           break
         case 'EdgeChain':
-          const edgeChainCommands = resolveEdgeChainCommands(acc.ids, element)
+          const edgeChainCommands = resolveEdgeChainCommands(
+            acc.variables,
+            element
+          )
           acc.commands = acc.commands.concat(edgeChainCommands)
           break
         default:
@@ -66,7 +69,7 @@ export default program => {
 
       return acc
     },
-    { ids: {}, commands: [] }
+    { variables: {}, commands: [] }
   )
 
   return commands

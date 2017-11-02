@@ -24,7 +24,7 @@ Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% d => ({
 }) %}
 
 # TODO: allow comment after statement
-Statement -> EdgeChain | IdentifierDefinition | Comment
+Statement -> EdgeChain | VariableDefinition | Comment
 
 # TODO: multiline comments?
 Comment -> "#" [^\n]:* {% d => ({
@@ -60,8 +60,8 @@ NodeList -> Node (delimiter Node {% d => d[1][0] %}):* {% d => ({
 }) %}
 Node -> Identifier | Literal
 
-IdentifierDefinition -> Identifier sl_ "=" sl_ Literal {% d => ({
-  type: 'IdentifierDefinition',
+VariableDefinition -> Identifier sl_ "=" sl_ Literal {% d => ({
+  type: 'VariableDefinition',
   id: d[0],
   value: d[4]
 }) %}

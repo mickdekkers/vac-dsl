@@ -400,7 +400,7 @@
         })
       },
       { name: 'Statement', symbols: ['EdgeChain'] },
-      { name: 'Statement', symbols: ['IdentifierDefinition'] },
+      { name: 'Statement', symbols: ['VariableDefinition'] },
       { name: 'Statement', symbols: ['Comment'] },
       { name: 'Comment$ebnf$1', symbols: [] },
       {
@@ -567,10 +567,10 @@
       { name: 'Node', symbols: ['Identifier'] },
       { name: 'Node', symbols: ['Literal'] },
       {
-        name: 'IdentifierDefinition',
+        name: 'VariableDefinition',
         symbols: ['Identifier', 'sl_', { literal: '=' }, 'sl_', 'Literal'],
         postprocess: d => ({
-          type: 'IdentifierDefinition',
+          type: 'VariableDefinition',
           id: d[0],
           value: d[4]
         })
