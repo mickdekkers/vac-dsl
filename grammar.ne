@@ -9,6 +9,7 @@
 %}
 
 @builtin "string.ne"
+@builtin "number.ne"
 
 # TODO: implement lexer to obtain line numbers
 # TODO: capitalize rule name
@@ -32,9 +33,25 @@ Comment -> "#" [^\n]:* {% d => ({
   raw: d[0].concat(d[1].join(''))
 }) %}
 
-EdgeChain -> NodeList (sl_ "->" sl_ NodeList {% d => d[3] %}):+ {% d => ({
-  type: 'EdgeChain',
-  nodeLists: flatten(d)
+EdgeChain ->
+  NodeList (sl_ "->" sl_ NodeList {% d => d[3] %}):+
+  (sl_ PropertyList {% d => d[1] %}):? {% d => ({
+    type: 'EdgeChain',
+    nodeLists: [d[0]].concat(d[1]),
+    properties: d[2] || []
+  }) %}
+
+PropertyList -> "["
+    sl_ Property ((sl__ | sl_ "," sl_) Property {% d => d[1] %}):* sl_
+  "]" {% d => ({
+    type: 'PropertyList',
+    properties: [d[2]].concat(d[3])
+  }) %}
+
+Property -> [a-zA-Z_]:+ sl_ "=" sl_ (jsonfloat | dqstring) {% d => ({
+  type: 'Property',
+  name: d[0].join(''),
+  value: d[4][0]
 }) %}
 
 NodeList -> Node (sl_ "," sl_ Node {% d => d[3][0] %}):* {% d => ({
