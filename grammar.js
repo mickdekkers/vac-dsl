@@ -104,41 +104,41 @@
           return d.join('')
         }
       },
-      { name: 'main$ebnf$1', symbols: [] },
+      { name: 'Main$ebnf$1', symbols: [] },
       {
-        name: 'main$ebnf$1$subexpression$1$ebnf$1',
+        name: 'Main$ebnf$1$subexpression$1$ebnf$1',
         symbols: [{ literal: '\n' }]
       },
       {
-        name: 'main$ebnf$1$subexpression$1$ebnf$1',
-        symbols: ['main$ebnf$1$subexpression$1$ebnf$1', { literal: '\n' }],
+        name: 'Main$ebnf$1$subexpression$1$ebnf$1',
+        symbols: ['Main$ebnf$1$subexpression$1$ebnf$1', { literal: '\n' }],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'main$ebnf$1$subexpression$1',
-        symbols: ['main$ebnf$1$subexpression$1$ebnf$1', 'stmt'],
+        name: 'Main$ebnf$1$subexpression$1',
+        symbols: ['Main$ebnf$1$subexpression$1$ebnf$1', 'Statement'],
         postprocess: d => d[1][0]
       },
       {
-        name: 'main$ebnf$1',
-        symbols: ['main$ebnf$1', 'main$ebnf$1$subexpression$1'],
+        name: 'Main$ebnf$1',
+        symbols: ['Main$ebnf$1', 'Main$ebnf$1$subexpression$1'],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
-      { name: 'main$ebnf$2', symbols: [] },
+      { name: 'Main$ebnf$2', symbols: [] },
       {
-        name: 'main$ebnf$2',
-        symbols: ['main$ebnf$2', { literal: '\n' }],
+        name: 'Main$ebnf$2',
+        symbols: ['Main$ebnf$2', { literal: '\n' }],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'main',
-        symbols: ['stmt', 'main$ebnf$1', 'main$ebnf$2'],
+        name: 'Main',
+        symbols: ['Statement', 'Main$ebnf$1', 'Main$ebnf$2'],
         postprocess: d => ({
           type: 'Program',
           body: reject(flatten(d), x => x === '\n'), // remove extra newlines
@@ -147,20 +147,20 @@
           }
         })
       },
-      { name: 'stmt', symbols: ['edgeChain'] },
-      { name: 'stmt', symbols: ['idDef'] },
-      { name: 'stmt', symbols: ['comment'] },
-      { name: 'comment$ebnf$1', symbols: [] },
+      { name: 'Statement', symbols: ['EdgeChain'] },
+      { name: 'Statement', symbols: ['IdentifierDefinition'] },
+      { name: 'Statement', symbols: ['Comment'] },
+      { name: 'Comment$ebnf$1', symbols: [] },
       {
-        name: 'comment$ebnf$1',
-        symbols: ['comment$ebnf$1', /[^\n]/],
+        name: 'Comment$ebnf$1',
+        symbols: ['Comment$ebnf$1', /[^\n]/],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'comment',
-        symbols: [{ literal: '#' }, 'comment$ebnf$1'],
+        name: 'Comment',
+        symbols: [{ literal: '#' }, 'Comment$ebnf$1'],
         postprocess: d => ({
           type: 'Comment',
           value: d[1].join('').trim(),
@@ -168,84 +168,84 @@
         })
       },
       {
-        name: 'edgeChain$ebnf$1$subexpression$1$string$1',
+        name: 'EdgeChain$ebnf$1$subexpression$1$string$1',
         symbols: [{ literal: '-' }, { literal: '>' }],
         postprocess: function joiner(d) {
           return d.join('')
         }
       },
       {
-        name: 'edgeChain$ebnf$1$subexpression$1',
+        name: 'EdgeChain$ebnf$1$subexpression$1',
         symbols: [
           'sl_',
-          'edgeChain$ebnf$1$subexpression$1$string$1',
+          'EdgeChain$ebnf$1$subexpression$1$string$1',
           'sl_',
-          'nodeList'
+          'NodeList'
         ],
         postprocess: d => d[3]
       },
       {
-        name: 'edgeChain$ebnf$1',
-        symbols: ['edgeChain$ebnf$1$subexpression$1']
+        name: 'EdgeChain$ebnf$1',
+        symbols: ['EdgeChain$ebnf$1$subexpression$1']
       },
       {
-        name: 'edgeChain$ebnf$1$subexpression$2$string$1',
+        name: 'EdgeChain$ebnf$1$subexpression$2$string$1',
         symbols: [{ literal: '-' }, { literal: '>' }],
         postprocess: function joiner(d) {
           return d.join('')
         }
       },
       {
-        name: 'edgeChain$ebnf$1$subexpression$2',
+        name: 'EdgeChain$ebnf$1$subexpression$2',
         symbols: [
           'sl_',
-          'edgeChain$ebnf$1$subexpression$2$string$1',
+          'EdgeChain$ebnf$1$subexpression$2$string$1',
           'sl_',
-          'nodeList'
+          'NodeList'
         ],
         postprocess: d => d[3]
       },
       {
-        name: 'edgeChain$ebnf$1',
-        symbols: ['edgeChain$ebnf$1', 'edgeChain$ebnf$1$subexpression$2'],
+        name: 'EdgeChain$ebnf$1',
+        symbols: ['EdgeChain$ebnf$1', 'EdgeChain$ebnf$1$subexpression$2'],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'edgeChain',
-        symbols: ['nodeList', 'edgeChain$ebnf$1'],
+        name: 'EdgeChain',
+        symbols: ['NodeList', 'EdgeChain$ebnf$1'],
         postprocess: d => ({
           type: 'EdgeChain',
           nodeLists: flatten(d)
         })
       },
-      { name: 'nodeList$ebnf$1', symbols: [] },
+      { name: 'NodeList$ebnf$1', symbols: [] },
       {
-        name: 'nodeList$ebnf$1$subexpression$1',
-        symbols: ['sl_', { literal: ',' }, 'sl_', 'node'],
+        name: 'NodeList$ebnf$1$subexpression$1',
+        symbols: ['sl_', { literal: ',' }, 'sl_', 'Node'],
         postprocess: d => d[3][0]
       },
       {
-        name: 'nodeList$ebnf$1',
-        symbols: ['nodeList$ebnf$1', 'nodeList$ebnf$1$subexpression$1'],
+        name: 'NodeList$ebnf$1',
+        symbols: ['NodeList$ebnf$1', 'NodeList$ebnf$1$subexpression$1'],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'nodeList',
-        symbols: ['node', 'nodeList$ebnf$1'],
+        name: 'NodeList',
+        symbols: ['Node', 'NodeList$ebnf$1'],
         postprocess: d => ({
           type: 'NodeList',
           nodes: flatten(d)
         })
       },
-      { name: 'node', symbols: ['id'] },
-      { name: 'node', symbols: ['literal'] },
+      { name: 'Node', symbols: ['Identifier'] },
+      { name: 'Node', symbols: ['Literal'] },
       {
-        name: 'idDef',
-        symbols: ['id', 'sl_', { literal: '=' }, 'sl_', 'literal'],
+        name: 'IdentifierDefinition',
+        symbols: ['Identifier', 'sl_', { literal: '=' }, 'sl_', 'Literal'],
         postprocess: d => ({
           type: 'IdentifierDefinition',
           id: d[0],
@@ -253,24 +253,24 @@
         })
       },
       {
-        name: 'literal',
+        name: 'Literal',
         symbols: ['dqstring'],
         postprocess: d => ({
           type: 'Literal',
           value: d[0]
         })
       },
-      { name: 'id$ebnf$1', symbols: [/[a-zA-Z_]/] },
+      { name: 'Identifier$ebnf$1', symbols: [/[a-zA-Z_]/] },
       {
-        name: 'id$ebnf$1',
-        symbols: ['id$ebnf$1', /[a-zA-Z_]/],
+        name: 'Identifier$ebnf$1',
+        symbols: ['Identifier$ebnf$1', /[a-zA-Z_]/],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
       },
       {
-        name: 'id',
-        symbols: ['id$ebnf$1'],
+        name: 'Identifier',
+        symbols: ['Identifier$ebnf$1'],
         postprocess: d => ({
           type: 'Identifier',
           name: d[0].join('')
@@ -296,7 +296,7 @@
       { name: 'sl__', symbols: ['sl__$ebnf$1'], postprocess: nuller },
       { name: 'slwschar', symbols: [/[ \t\v\f]/], postprocess: id }
     ],
-    ParserStart: 'main'
+    ParserStart: 'Main'
   }
   if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = grammar

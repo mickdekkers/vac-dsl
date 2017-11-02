@@ -14,7 +14,7 @@
 # TODO: capitalize rule name
 # TODO: don't be so iffy about newlines and consider switching whitespace to allow newlines anywhere
 
-main -> stmt ("\n":+ stmt {% d => d[1][0] %}):* "\n":* {% d => ({
+Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% d => ({
   type: "Program",
   body: reject(flatten(d), x => x === '\n'), // remove extra newlines
   meta: {
@@ -23,38 +23,38 @@ main -> stmt ("\n":+ stmt {% d => d[1][0] %}):* "\n":* {% d => ({
 }) %}
 
 # TODO: allow comment after statement
-stmt -> edgeChain | idDef | comment
+Statement -> EdgeChain | IdentifierDefinition | Comment
 
 # TODO: multiline comments?
-comment -> "#" [^\n]:* {% d => ({
+Comment -> "#" [^\n]:* {% d => ({
   type: "Comment",
   value: d[1].join('').trim(),
   raw: d[0].concat(d[1].join(''))
 }) %}
 
-edgeChain -> nodeList (sl_ "->" sl_ nodeList {% d => d[3] %}):+ {% d => ({
+EdgeChain -> NodeList (sl_ "->" sl_ NodeList {% d => d[3] %}):+ {% d => ({
   type: 'EdgeChain',
   nodeLists: flatten(d)
 }) %}
 
-nodeList -> node (sl_ "," sl_ node {% d => d[3][0] %}):* {% d => ({
+NodeList -> Node (sl_ "," sl_ Node {% d => d[3][0] %}):* {% d => ({
   type: 'NodeList',
   nodes: flatten(d)
 }) %}
-node -> id | literal
+Node -> Identifier | Literal
 
-idDef -> id sl_ "=" sl_ literal {% d => ({
+IdentifierDefinition -> Identifier sl_ "=" sl_ Literal {% d => ({
   type: 'IdentifierDefinition',
   id: d[0],
   value: d[4]
 }) %}
 
-literal -> dqstring {% d => ({
+Literal -> dqstring {% d => ({
   type: 'Literal',
   value: d[0]
 }) %}
 
-id -> [a-zA-Z_]:+ {% d => ({
+Identifier -> [a-zA-Z_]:+ {% d => ({
   type: 'Identifier',
   name: d[0].join('')
 }) %}
