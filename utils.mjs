@@ -1,7 +1,12 @@
 import R from 'ramda'
 
-// Morph one object into another, modifying, adding and removing properties according to a spec
-// (does not mutate the original object)
+/**
+ * Morph one object into another, modifying, adding and removing properties
+ * according to a spec. This does not mutate the original object.
+ * @param spec - A spec object
+ * @param data - The object to morph
+ * @returns An object morphed according to the spec
+ */
 export const morph = R.curry((spec, data) =>
   R.pipe(
     R.converge(R.merge, [R.identity, R.applySpec(spec)]),
