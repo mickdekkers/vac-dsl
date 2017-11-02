@@ -24,8 +24,9 @@ const resolveValue = R.curry((ids, idOrLiteral) => {
 const connectionOf = (from, to) => ({ from, to })
 const getConnections = getCombinationsWith(connectionOf)
 
-const flattenEdges = combineAdjacentWith((left, right) =>
-  getConnections(left.nodes, right.nodes)
+const flattenEdges = R.pipe(
+  combineAdjacentWith((left, right) => getConnections(left.nodes, right.nodes)),
+  R.unnest
 )
 
 /**

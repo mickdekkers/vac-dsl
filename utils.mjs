@@ -11,7 +11,7 @@ export const morph = R.curry((spec, data) =>
 )
 
 /**
- * Get all combinations of two arrays using a combiner function
+ * Get all combinations of two lists using a combiner function
  */
 export const getCombinationsWith = R.curry((combiner, left, right) =>
   R.map(R.apply(combiner), R.xprod(left, right))
@@ -20,16 +20,6 @@ export const getCombinationsWith = R.curry((combiner, left, right) =>
 /**
  * Combine adjacent elements of a list using a combiner function
  */
-export const combineAdjacentWith = R.curry((combiner, list) => {
-  return list.reduce((acc, el, index) => {
-    const left = el
-    const right = list[index + 1]
-
-    if (right != null) {
-      const combined = combiner(left, right)
-      acc = acc.concat(combined)
-    }
-
-    return acc
-  }, [])
-})
+export const combineAdjacentWith = R.curry((combiner, list) =>
+  R.map(R.apply(combiner), R.aperture(2, list))
+)
