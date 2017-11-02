@@ -13,10 +13,6 @@ export const morph = R.curry((spec, data) =>
 /**
  * Get all combinations of two arrays using a combiner function
  */
-export const getCombinationsWith = R.curry((combiner, left, right) => {
-  const connections = []
-
-  left.forEach(l => right.forEach(r => connections.push(combiner(l, r))))
-
-  return connections
-})
+export const getCombinationsWith = R.curry((combiner, left, right) =>
+  R.map(R.apply(combiner), R.xprod(left, right))
+)
