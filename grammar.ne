@@ -42,7 +42,7 @@ EdgeChain ->
   }) %}
 
 PropertyList -> "["
-    sl_ Property ((sl__ | sl_ "," sl_) Property {% d => d[1] %}):* sl_
+    sl_ Property (delimiter Property {% d => d[1] %}):* sl_
   "]" {% d => ({
     type: 'PropertyList',
     properties: [d[2]].concat(d[3])
@@ -54,7 +54,7 @@ Property -> [a-zA-Z_]:+ sl_ "=" sl_ (jsonfloat | dqstring) {% d => ({
   value: d[4][0]
 }) %}
 
-NodeList -> Node (sl_ "," sl_ Node {% d => d[3][0] %}):* {% d => ({
+NodeList -> Node (delimiter Node {% d => d[1][0] %}):* {% d => ({
   type: 'NodeList',
   nodes: flatten(d)
 }) %}
@@ -75,6 +75,9 @@ Identifier -> [a-zA-Z_]:+ {% d => ({
   type: 'Identifier',
   name: d[0].join('')
 }) %}
+
+# Single-line whitespace or comma delimiter
+delimiter -> (sl__ | sl_ "," sl_)
 
 # Single-line whitespace
 sl_ -> slwschar:* {% nuller %}

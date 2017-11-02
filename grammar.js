@@ -492,19 +492,8 @@
       },
       { name: 'PropertyList$ebnf$1', symbols: [] },
       {
-        name: 'PropertyList$ebnf$1$subexpression$1$subexpression$1',
-        symbols: ['sl__']
-      },
-      {
-        name: 'PropertyList$ebnf$1$subexpression$1$subexpression$1',
-        symbols: ['sl_', { literal: ',' }, 'sl_']
-      },
-      {
         name: 'PropertyList$ebnf$1$subexpression$1',
-        symbols: [
-          'PropertyList$ebnf$1$subexpression$1$subexpression$1',
-          'Property'
-        ],
+        symbols: ['delimiter', 'Property'],
         postprocess: d => d[1]
       },
       {
@@ -557,8 +546,8 @@
       { name: 'NodeList$ebnf$1', symbols: [] },
       {
         name: 'NodeList$ebnf$1$subexpression$1',
-        symbols: ['sl_', { literal: ',' }, 'sl_', 'Node'],
-        postprocess: d => d[3][0]
+        symbols: ['delimiter', 'Node'],
+        postprocess: d => d[1][0]
       },
       {
         name: 'NodeList$ebnf$1',
@@ -610,6 +599,12 @@
           name: d[0].join('')
         })
       },
+      { name: 'delimiter$subexpression$1', symbols: ['sl__'] },
+      {
+        name: 'delimiter$subexpression$1',
+        symbols: ['sl_', { literal: ',' }, 'sl_']
+      },
+      { name: 'delimiter', symbols: ['delimiter$subexpression$1'] },
       { name: 'sl_$ebnf$1', symbols: [] },
       {
         name: 'sl_$ebnf$1',
