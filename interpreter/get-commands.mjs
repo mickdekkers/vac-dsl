@@ -1,5 +1,5 @@
 import R from 'ramda'
-import { getCombinationsWith } from '../utils'
+import { getCombinationsWith, combineAdjacentWith } from '../utils'
 
 /**
  * Retrieve the value of an Identifier or Literal
@@ -24,20 +24,9 @@ const resolveValue = R.curry((ids, idOrLiteral) => {
 const connectionOf = (from, to) => ({ from, to })
 const getConnections = getCombinationsWith(connectionOf)
 
-const flattenEdges = edges => {
-  // TODO: find more fp inspired method of doing this too
-  return edges.reduce((acc, el, index) => {
-    const left = el
-    const right = edges[index + 1]
-
-    if (right != null) {
-      const lrConnections = getConnections(left.nodes, right.nodes)
-      acc = acc.concat(lrConnections)
-    }
-
-    return acc
-  }, [])
-}
+const flattenEdges = combineAdjacentWith((left, right) =>
+  getConnections(left.nodes, right.nodes)
+)
 
 /**
  * Retrieve a list of connections to make from a vac-dsl program

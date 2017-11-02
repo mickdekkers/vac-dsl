@@ -16,3 +16,20 @@ export const morph = R.curry((spec, data) =>
 export const getCombinationsWith = R.curry((combiner, left, right) =>
   R.map(R.apply(combiner), R.xprod(left, right))
 )
+
+/**
+ * Combine adjacent elements of a list using a combiner function
+ */
+export const combineAdjacentWith = R.curry((combiner, list) => {
+  return list.reduce((acc, el, index) => {
+    const left = el
+    const right = list[index + 1]
+
+    if (right != null) {
+      const combined = combiner(left, right)
+      acc = acc.concat(combined)
+    }
+
+    return acc
+  }, [])
+})
