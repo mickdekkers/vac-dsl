@@ -9,3 +9,14 @@ export const morph = R.curry((spec, data) =>
     R.reject(R.equals(undefined))
   )(data)
 )
+
+/**
+ * Get all combinations of two arrays using a combiner function
+ */
+export const getCombinationsWith = R.curry((combiner, left, right) => {
+  const connections = []
+
+  left.forEach(l => right.forEach(r => connections.push(combiner(l, r))))
+
+  return connections
+})

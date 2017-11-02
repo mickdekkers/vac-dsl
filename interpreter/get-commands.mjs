@@ -1,4 +1,5 @@
 import R from 'ramda'
+import { getCombinationsWith } from '../utils'
 
 /**
  * Retrieve the value of an Identifier or Literal
@@ -20,15 +21,8 @@ const resolveValue = R.curry((ids, idOrLiteral) => {
   }
 })
 
-// TODO: rename these functions
-const resolveConnections = (left, right) => {
-  const connections = []
-
-  // TODO: find more fp inspired method of doing this
-  left.forEach(l => right.forEach(r => connections.push({ from: l, to: r })))
-
-  return connections
-}
+const connectionOf = (from, to) => ({ from, to })
+const getConnections = getCombinationsWith(connectionOf)
 
 const flattenEdges = edges => {
   // TODO: find more fp inspired method of doing this too
@@ -37,7 +31,8 @@ const flattenEdges = edges => {
     const right = edges[index + 1]
 
     if (right != null) {
-      acc = acc.concat(resolveConnections(left.nodes, right.nodes))
+      const lrConnections = getConnections(left.nodes, right.nodes)
+      acc = acc.concat(lrConnections)
     }
 
     return acc
