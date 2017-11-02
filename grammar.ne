@@ -20,9 +20,8 @@ Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% d => ({
 }) %}
 
 # TODO: allow comment after statement
-Statement -> EdgeChain | VariableDefinition | Comment
+Statement -> VariableDefinition | EdgeChain | Comment
 
-# TODO: multiline comments?
 Comment -> "#" [^\n]:* {% d => ({
   type: "Comment",
   value: d[1].join('').trim(),

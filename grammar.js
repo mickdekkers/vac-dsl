@@ -399,8 +399,8 @@
           }
         })
       },
-      { name: 'Statement', symbols: ['EdgeChain'] },
       { name: 'Statement', symbols: ['VariableDefinition'] },
+      { name: 'Statement', symbols: ['EdgeChain'] },
       { name: 'Statement', symbols: ['Comment'] },
       { name: 'Comment$ebnf$1', symbols: [] },
       {
