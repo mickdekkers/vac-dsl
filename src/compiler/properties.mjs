@@ -1,5 +1,6 @@
 import changeCase from 'change-case'
 import dedent from 'dedent'
+import didYouMean from 'didyoumean2'
 import R from 'ramda'
 
 /**
@@ -30,7 +31,6 @@ export const assocCommandProperties = R.curry((properties, command) => {
   return R.assoc('properties', props, command)
 })
 
-// TODO: refactor this
 const allowedProperties = new Set([
   'sampling_rate',
   'bits_per_sample',
@@ -40,6 +40,12 @@ const allowedProperties = new Set([
   'priority'
 ])
 
+const suggestProperties = input =>
+  didYouMean(input, Array.from(allowedProperties), {
+    returnType: 'all-sorted-matches'
+  }).slice(0, 3)
+
+// TODO: validate property values
 export const validateProperties = properties => {
   if (properties == null) {
     return
@@ -47,13 +53,15 @@ export const validateProperties = properties => {
 
   properties.forEach(property => {
     const prop = property.name
-    if (!allowedProperties.has(changeCase.snakeCase(prop))) {
+    if (!allowedProperties.has(prop)) {
+      const similar = suggestProperties(prop)
+      const suggestions = similar.length
+        ? similar
+        : Array.from(allowedProperties)
+
       throw new Error(dedent`
-        Property "${prop}" is invalid.
-        List of valid properties:
-        ${Array.from(allowedProperties)
-          .map(ap => `- ${ap}`)
-          .join('\n')}
+        Property "${prop}" doesn't exist. Did you mean one of these?
+        ${suggestions.map(ap => `  - ${ap}`).join('\n        ')}\n
       `)
     }
   })
