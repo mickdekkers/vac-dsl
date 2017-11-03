@@ -1,4 +1,5 @@
 import R from 'ramda'
+import dedent from 'dedent'
 import changeCase from 'change-case'
 import { getCombinationsWith, combineAdjacentWith } from '../utils'
 
@@ -79,6 +80,35 @@ const assocCommandProperties = R.curry((properties, command) => {
   return R.assoc('properties', props, command)
 })
 
+// TODO: refactor this
+const allowedProperties = [
+  'SamplingRate',
+  'BitsPerSample',
+  'Channels',
+  'BufferMs',
+  'Buffers',
+  'Priority'
+]
+const validateProperties = properties => {
+  if (properties == null) {
+    return
+  }
+
+  properties.forEach(property => {
+    const prop = property.name
+    if (!allowedProperties.includes(changeCase.pascalCase(prop))) {
+      throw new Error(dedent`
+        Property "${prop}" is invalid.
+        List of valid properties:
+        ${allowedProperties
+          .map(R.unary(changeCase.snakeCase))
+          .map(ap => `- ${ap}`)
+          .join('\n')}
+      `)
+    }
+  })
+}
+
 /**
  * Retrieve a list of connections to make from a vac-dsl program
  * @param program - The AST of a vac-dsl program
@@ -93,6 +123,9 @@ export default program => {
           break
         case 'EdgeChain':
           const { properties: { properties } } = element
+
+          validateProperties(properties)
+
           const commands = expandEdgeChain(element).map(
             R.pipe(
               resolveCommandValues(acc.variables),

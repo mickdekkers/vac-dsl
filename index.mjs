@@ -1,5 +1,5 @@
 import getParser from './parser'
-import interpreter from './interpreter'
+import interpreter from './interpreter/vac'
 import fs from 'fs'
 
 const parser = getParser()
