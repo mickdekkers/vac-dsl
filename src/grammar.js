@@ -5,13 +5,15 @@
     return x[0]
   }
 
+  const { reject } = require('lodash')
+  const pkg = require('read-pkg-up').sync().pkg
+
   // This is apparently not as "built-in" as the docs suggest
   const nuller = d => null
+
   const log = d => (console.log(d), d)
   const flatten = arrays => Array.prototype.concat.apply([], arrays)
-  const pkg = require('read-pkg-up').sync()
   const parser = `${pkg.name}@${pkg.version}`
-  const { reject } = require('lodash')
   var grammar = {
     Lexer: undefined,
     ParserRules: [
@@ -391,11 +393,14 @@
       {
         name: 'Main',
         symbols: ['Statement', 'Main$ebnf$1', 'Main$ebnf$2'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'Program',
           body: reject(flatten(d), x => x === '\n'), // remove extra newlines
           meta: {
             parser
+          },
+          location: {
+            start: idx
           }
         })
       },
@@ -413,10 +418,13 @@
       {
         name: 'Comment',
         symbols: [{ literal: '#' }, 'Comment$ebnf$1'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'Comment',
           value: d[1].join('').trim(),
-          raw: d[0].concat(d[1].join(''))
+          raw: d[0].concat(d[1].join('')),
+          location: {
+            start: idx
+          }
         })
       },
       {
@@ -484,10 +492,13 @@
       {
         name: 'EdgeChain',
         symbols: ['NodeList', 'EdgeChain$ebnf$1', 'EdgeChain$ebnf$2'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'EdgeChain',
           nodeLists: [d[0]].concat(d[1]),
-          properties: d[2] || []
+          properties: d[2] || [],
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'PropertyList$ebnf$1', symbols: [] },
@@ -513,9 +524,12 @@
           'sl_',
           { literal: ']' }
         ],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'PropertyList',
-          properties: [d[2]].concat(d[3])
+          properties: [d[2]].concat(d[3]),
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'Property$ebnf$1', symbols: [/[a-zA-Z_]/] },
@@ -537,10 +551,13 @@
           'sl_',
           'Property$subexpression$1'
         ],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'Property',
           name: d[0].join(''),
-          value: d[4][0]
+          value: d[4][0],
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'NodeList$ebnf$1', symbols: [] },
@@ -559,9 +576,12 @@
       {
         name: 'NodeList',
         symbols: ['Node', 'NodeList$ebnf$1'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'NodeList',
-          nodes: flatten(d)
+          nodes: flatten(d),
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'Node', symbols: ['Identifier'] },
@@ -569,18 +589,24 @@
       {
         name: 'VariableDefinition',
         symbols: ['Identifier', 'sl_', { literal: '=' }, 'sl_', 'Literal'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'VariableDefinition',
           id: d[0],
-          value: d[4]
+          value: d[4],
+          location: {
+            start: idx
+          }
         })
       },
       {
         name: 'Literal',
         symbols: ['dqstring'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'Literal',
-          value: d[0]
+          value: d[0],
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'Identifier$ebnf$1', symbols: [/[a-zA-Z_]/] },
@@ -594,9 +620,12 @@
       {
         name: 'Identifier',
         symbols: ['Identifier$ebnf$1'],
-        postprocess: d => ({
+        postprocess: (d, idx) => ({
           type: 'Identifier',
-          name: d[0].join('')
+          name: d[0].join(''),
+          location: {
+            start: idx
+          }
         })
       },
       { name: 'delimiter$subexpression$1', symbols: ['sl__'] },
