@@ -16,6 +16,7 @@
     "prettier": "^1.7.4",
     "ramda": "^0.25.0",
     "ramda-adjunct": "^1.19.0",
+    "read-pkg-up": "^2.0.0",
     "treis": "^2.5.0"
   }
 }

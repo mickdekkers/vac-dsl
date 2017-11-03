@@ -1,5 +1,6 @@
 import getParser from './parser'
-import interpreter from './interpreter/vac'
+import compiler from './compiler'
+import interpreter from './interpreter'
 import fs from 'fs'
 
 const parser = getParser()
@@ -11,5 +12,8 @@ export default input => {
     throw new Error('Invalid or empty program')
   }
 
-  return interpreter(ast)
+  const commands = compiler(ast)
+
+  return commands
+  // interpreter(commands)
 }

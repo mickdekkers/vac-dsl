@@ -1,7 +1,7 @@
 import R from 'ramda'
-import dedent from 'dedent'
-import changeCase from 'change-case'
-import { getCombinationsWith, combineAdjacentWith } from '../utils'
+import crc32 from 'crc-32'
+import { morph, getCombinationsWith, combineAdjacentWith } from '../utils'
+import { validateProperties, assocCommandProperties } from './properties'
 
 /**
  * Resolve the value of an Identifier or Literal
@@ -52,62 +52,16 @@ const expandEdgeChain = R.pipe(
   R.unnest
 )
 
-/**
- * Reduce a list of properties to a PascalCase formatted property object
- * @param properties - A list of property objects with `{name, value}` fields
- * @returns An object containing the properties
- */
-const propertiesListToObject = properties => {
-  if (properties == null) {
-    return {}
-  }
-
-  return properties.reduce(
-    (acc, prop) => R.assoc(changeCase.pascalCase(prop.name), prop.value, acc),
-    {}
-  )
-}
-
-/**
- * Associate a list of properties with a command
- * @param properties - A list of properties to associate with the command
- * @param command - A command object to associate the properties with
- * @returns A command object with a `properties` field containing the properties
- */
-const assocCommandProperties = R.curry((properties, command) => {
-  const props = propertiesListToObject(properties)
-
-  return R.assoc('properties', props, command)
+// VAC has a limit on the number of characters in a device name
+const capDeviceName = deviceName => deviceName.slice(0, 31).trim()
+const capCommandDeviceNames = R.evolve({
+  from: capDeviceName,
+  to: capDeviceName
 })
 
-// TODO: refactor this
-const allowedProperties = [
-  'SamplingRate',
-  'BitsPerSample',
-  'Channels',
-  'BufferMs',
-  'Buffers',
-  'Priority'
-]
-const validateProperties = properties => {
-  if (properties == null) {
-    return
-  }
+const getHash = str => (crc32.str(str) >>> 0).toString(16)
 
-  properties.forEach(property => {
-    const prop = property.name
-    if (!allowedProperties.includes(changeCase.pascalCase(prop))) {
-      throw new Error(dedent`
-        Property "${prop}" is invalid.
-        List of valid properties:
-        ${allowedProperties
-          .map(R.unary(changeCase.snakeCase))
-          .map(ap => `- ${ap}`)
-          .join('\n')}
-      `)
-    }
-  })
-}
+const addCommandHash = morph({ hash: ({ from, to }) => getHash(from + to) })
 
 /**
  * Retrieve a list of connections to make from a vac-dsl program
@@ -149,5 +103,5 @@ export default program => {
     { variables: {}, commands: [] }
   )
 
-  return commands
+  return commands.map(R.pipe(capCommandDeviceNames, addCommandHash))
 }

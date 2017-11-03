@@ -3,7 +3,7 @@
   const nuller = d => null
   const log = d => (console.log(d), d)
   const flatten = arrays => Array.prototype.concat.apply([], arrays)
-  const pkg = require('./package.json')
+  const pkg = require('read-pkg-up').sync()
   const parser = `${pkg.name}@${pkg.version}`
   const { reject } = require('lodash')
 %}

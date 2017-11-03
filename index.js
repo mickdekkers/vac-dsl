@@ -1,2 +1,2 @@
 require = require('@std/esm')(module)
-module.exports = require('./index.mjs').default
+module.exports = require('./src/index.mjs').default
