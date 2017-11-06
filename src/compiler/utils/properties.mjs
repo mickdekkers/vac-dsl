@@ -1,7 +1,11 @@
 import changeCase from 'change-case'
 import dedent from 'dedent'
-import didYouMean from 'didyoumean2'
 import R from 'ramda'
+import {
+  propertyValidators,
+  propertyNames,
+  didYouMeanProperty
+} from '../properties'
 
 /**
  * Reduce a list of properties to a PascalCase formatted property object
@@ -26,43 +30,33 @@ const propertiesListToObject = properties => {
  * @returns A command object with a `properties` field containing the properties
  */
 export const assocCommandProperties = R.curry((properties, command) => {
-  const props = propertiesListToObject(properties)
+  const propertiesObject = propertiesListToObject(properties)
 
-  return R.assoc('properties', props, command)
+  return R.assoc('properties', propertiesObject, command)
 })
 
-const allowedProperties = new Set([
-  'sampling_rate',
-  'bits_per_sample',
-  'channels',
-  'buffer_ms',
-  'buffers',
-  'priority'
-])
-
-const suggestProperties = input =>
-  didYouMean(input, Array.from(allowedProperties), {
-    returnType: 'all-sorted-matches'
-  }).slice(0, 3)
-
-// TODO: validate property values
 export const validateProperties = properties => {
   if (properties == null) {
     return
   }
 
-  properties.forEach(property => {
-    const prop = property.name
-    if (!allowedProperties.has(prop)) {
-      const similar = suggestProperties(prop)
-      const suggestions = similar.length
-        ? similar
-        : Array.from(allowedProperties)
+  properties.forEach(({ name, value }) => {
+    // Check name
+    if (!propertyNames.includes(name)) {
+      const similar = didYouMeanProperty(name)
+      const suggestions = similar.length ? similar : propertyNames
 
       throw new Error(dedent`
-        Property "${prop}" doesn't exist. Did you mean one of these?
+        Property "${name}" doesn't exist. Did you mean one of these?
         ${suggestions.map(ap => `  - ${ap}`).join('\n        ')}\n
       `)
+    }
+
+    // Check value
+    const validator = propertyValidators.get(name)
+    const { valid, msg } = validator.validate(value)
+    if (!valid) {
+      throw new Error(`Property ${name} ${msg}`)
     }
   })
 }

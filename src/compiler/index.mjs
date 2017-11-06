@@ -1,7 +1,7 @@
 import R from 'ramda'
 import crc32 from 'crc-32'
 import { morph, getCombinationsWith, combineAdjacentWith } from '../utils'
-import { validateProperties, assocCommandProperties } from './properties'
+import { validateProperties, assocCommandProperties } from './utils/properties'
 
 /**
  * Resolve the value of an Identifier or Literal
