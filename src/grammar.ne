@@ -20,8 +20,8 @@ Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% (d, idx) =>
   meta: {
 	  parser
   },
-  location: {
-    start: idx
+  loc: {
+    start: { index: idx }
   }
 }) %}
 
@@ -33,8 +33,8 @@ Comment -> "#" [^\n]:* {% (d, idx) => ({
   type: "Comment",
   value: d[1].join('').trim(),
   raw: d[0].concat(d[1].join('')),
-  location: {
-    start: idx
+  loc: {
+    start: { index: idx }
   }
 }) %}
 
@@ -44,8 +44,8 @@ EdgeChain ->
     type: 'EdgeChain',
     nodeLists: [d[0]].concat(d[1]),
     properties: d[2] || [],
-    location: {
-      start: idx
+    loc: {
+      start: { index: idx }
     }
   }) %}
 
@@ -54,8 +54,8 @@ PropertyList -> "["
   "]" {% (d, idx) => ({
     type: 'PropertyList',
     properties: [d[2]].concat(d[3]),
-    location: {
-      start: idx
+    loc: {
+      start: { index: idx }
     }
   }) %}
 
@@ -63,16 +63,16 @@ Property -> [a-zA-Z_]:+ sl_ "=" sl_ (jsonfloat | dqstring) {% (d, idx) => ({
   type: 'Property',
   name: d[0].join(''),
   value: d[4][0],
-  location: {
-    start: idx
+  loc: {
+    start: { index: idx }
   }
 }) %}
 
 NodeList -> Node (delimiter Node {% d => d[1][0] %}):* {% (d, idx) => ({
   type: 'NodeList',
   nodes: flatten(d),
-  location: {
-    start: idx
+  loc: {
+    start: { index: idx }
   }
 }) %}
 Node -> Identifier | Literal
@@ -81,8 +81,8 @@ VariableDefinition -> Identifier sl_ "=" sl_ Literal {% (d, idx) => ({
   type: 'VariableDefinition',
   id: d[0],
   value: d[4],
-  location: {
-    start: idx
+  loc: {
+    start: { index: idx }
   }
 }) %}
 
@@ -90,7 +90,7 @@ Literal -> dqstring {% (d, idx) => ({
   type: 'Literal',
   value: d[0],
   location: {
-    start: idx
+    start: { index: idx }
   }
 }) %}
 
@@ -98,7 +98,7 @@ Identifier -> [a-zA-Z_]:+ {% (d, idx) => ({
   type: 'Identifier',
   name: d[0].join(''),
   location: {
-    start: idx
+    start: { index: idx }
   }
 }) %}
 
