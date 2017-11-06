@@ -59,7 +59,7 @@ PropertyList -> "["
     }
   }) %}
 
-Property -> [a-zA-Z_]:+ sl_ "=" sl_ (jsonfloat | dqstring) {% (d, idx) => ({
+Property -> [a-zA-Z0-9_]:+ sl_ "=" sl_ (jsonfloat | dqstring) {% (d, idx) => ({
   type: 'Property',
   name: d[0].join(''),
   value: d[4][0],
@@ -94,7 +94,7 @@ Literal -> dqstring {% (d, idx) => ({
   }
 }) %}
 
-Identifier -> [a-zA-Z_]:+ {% (d, idx) => ({
+Identifier -> [a-zA-Z0-9_]:+ {% (d, idx) => ({
   type: 'Identifier',
   name: d[0].join(''),
   location: {

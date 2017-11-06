@@ -532,10 +532,10 @@
           }
         })
       },
-      { name: 'Property$ebnf$1', symbols: [/[a-zA-Z_]/] },
+      { name: 'Property$ebnf$1', symbols: [/[a-zA-Z0-9_]/] },
       {
         name: 'Property$ebnf$1',
-        symbols: ['Property$ebnf$1', /[a-zA-Z_]/],
+        symbols: ['Property$ebnf$1', /[a-zA-Z0-9_]/],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
@@ -609,10 +609,10 @@
           }
         })
       },
-      { name: 'Identifier$ebnf$1', symbols: [/[a-zA-Z_]/] },
+      { name: 'Identifier$ebnf$1', symbols: [/[a-zA-Z0-9_]/] },
       {
         name: 'Identifier$ebnf$1',
-        symbols: ['Identifier$ebnf$1', /[a-zA-Z_]/],
+        symbols: ['Identifier$ebnf$1', /[a-zA-Z0-9_]/],
         postprocess: function arrpush(d) {
           return d[0].concat([d[1]])
         }
