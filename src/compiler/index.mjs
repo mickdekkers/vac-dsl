@@ -103,5 +103,7 @@ export default program => {
     { variables: {}, commands: [] }
   )
 
+  // TODO: prevent circular connections
+
   return commands.map(R.pipe(capCommandDeviceNames, addCommandHash))
 }
