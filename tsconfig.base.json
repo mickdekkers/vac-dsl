@@ -1,13 +1,23 @@
 {
   "compilerOptions": {
-    "target": "es2015",
+    /* Basic Options */
+    "target": "es2017",
     "module": "commonjs",
     "declaration": true,
     "sourceMap": true,
+    "preserveConstEnums": true,
+    "newLine": "LF",
+
+    /* Strict Type-Checking Options */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+
+    /* Additional Checks */
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+
+    /* Module Resolution Options */
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true
   }
 }
