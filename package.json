@@ -5,8 +5,7 @@
     "fmt": "prettier --write --list-different --single-quote --no-semi \"**/*.?(m)js\" \"!**/.esm-cache/**\" || true"
   },
   "devDependencies": {
-    "lerna": "^2.5.1",
-    "prettier": "^1.8.1"
+    "lerna": "^2.5.1"
   },
   "private": true,
   "workspaces": [
