@@ -1,6 +1,7 @@
-- split off separate packages and use lerna + semantic-release
 - refactor to typescript
 - write tests
+- use lint-staged
+- use semantic-release
 - prevent circular references -- Edge case: two different input and output devices have the same name
 - write compiler error system with line and column numbers (will need to have compiler optionally (?) consume raw input in addition to AST)
 - refactor interpreter
