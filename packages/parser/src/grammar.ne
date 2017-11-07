@@ -1,3 +1,5 @@
+@preprocessor typescript
+
 @{%
   const { reject } = require('lodash')
   const pkg = require('read-pkg-up').sync().pkg

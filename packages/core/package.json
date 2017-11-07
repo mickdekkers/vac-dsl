@@ -2,17 +2,19 @@
   "name": "@vac-dsl/core",
   "version": "0.1.0",
   "description": "Shared code between vac-dsl packages",
-  "main": "lib/main.js",
-  "author": "Mick Dekkers",
   "license": "MIT",
-  "private": false,
+  "author": "Mick Dekkers",
+  "main": "lib/main.js",
   "scripts": {
-    "prepublish": "tsc -p tsconfig.build.json"
+    "build": "tsc -p tsconfig.build.json",
+    "prepublish": "run-s build"
   },
   "dependencies": {
     "ramda": "^0.25.0"
   },
   "devDependencies": {
+    "npm-run-all": "^4.1.2",
     "typescript": "^2.6.1"
-  }
+  },
+  "private": false
 }
