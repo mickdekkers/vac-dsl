@@ -2,13 +2,20 @@
   "name": "@vac-dsl/interpreter",
   "version": "0.1.0",
   "description": "The vac-dsl interpreter",
-  "main": "index.js",
+  "main": "lib/main.js",
   "author": "Mick Dekkers",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "prepublish": "tsc -p tsconfig.build.json"
+  },
   "dependencies": {
+    "@vac-dsl/core": "^0.1.0",
     "execa": "^0.8.0",
     "lodash": "^4.17.4",
     "ramda": "^0.25.0"
+  },
+  "devDependencies": {
+    "typescript": "^2.6.1"
   }
 }
