@@ -6,8 +6,7 @@ import {
   propertyNames,
   didYouMeanProperty
 } from '../properties'
-import { Subset } from '@vac-dsl/core'
-import { Command } from '../command'
+import { Subset, Command } from '@vac-dsl/core'
 
 export type PropertyObject = { name: string; value: any }
 

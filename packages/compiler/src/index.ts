@@ -1,6 +1,6 @@
 import R from 'ramda'
 import crc32 from 'crc-32'
-import { AST, EdgeChain, Node, NodeList } from '@vac-dsl/parser'
+import { AST, EdgeChain, Node, NodeList, Command } from '@vac-dsl/core'
 import {
   morph,
   getCombinationsWith,
@@ -8,9 +8,12 @@ import {
   Subset
 } from '@vac-dsl/core'
 import { validateProperties, assocCommandProperties } from './utils/properties'
-import { Command } from './command'
 
 type RawCommand = { from: Node; to: Node }
+
+type VariablesMap = {
+  [name: string]: string
+}
 
 /**
  * Resolve the value of an Identifier or Literal
@@ -83,15 +86,6 @@ const addCommandHash = morph({
   cmd: Subset<Command, 'from' | 'to'>
 ) => Subset<Command, 'from' | 'to' | 'hash'>
 
-type VariablesMap = {
-  [name: string]: string
-}
-
-type ProgramBodyReduceResult = {
-  commands: Subset<Command, 'from' | 'to' | 'properties'>[]
-  variables: VariablesMap
-}
-
 /**
  * Retrieve a list of connections to make from a vac-dsl program
  * @param program - The AST of a vac-dsl program
@@ -138,7 +132,10 @@ export default (program: AST): Command[] => {
     {
       variables: {},
       commands: []
-    } as ProgramBodyReduceResult
+    } as {
+      commands: Subset<Command, 'from' | 'to' | 'properties'>[]
+      variables: VariablesMap
+    }
   )
 
   // TODO: prevent circular connections

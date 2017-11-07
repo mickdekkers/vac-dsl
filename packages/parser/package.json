@@ -8,7 +8,7 @@
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "compile-grammar": "nearleyc src/grammar.ne | run-s -s prettier > src/grammar.ts",
-    "fmt": "yarn run prettier --write \"src/**/*.{ts,js}\"",
+    "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
     "prepublish": "run-s compile-grammar build",
     "prettier": "prettier --single-quote --no-semi"
   },

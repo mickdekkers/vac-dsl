@@ -7,7 +7,7 @@
   "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "fmt": "yarn run prettier --write \"src/**/*.{ts,js}\"",
+    "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
     "prepublish": "run-s build",
     "prettier": "prettier --single-quote --no-semi"
   },
