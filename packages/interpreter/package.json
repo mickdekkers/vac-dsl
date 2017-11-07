@@ -1,0 +1,14 @@
+{
+  "name": "@vac-dsl/interpreter",
+  "version": "0.1.0",
+  "description": "The vac-dsl interpreter",
+  "main": "index.js",
+  "author": "Mick Dekkers",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "execa": "^0.8.0",
+    "lodash": "^4.17.4",
+    "ramda": "^0.25.0"
+  }
+}

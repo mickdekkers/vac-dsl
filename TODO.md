@@ -1,0 +1,9 @@
+- split off separate packages and use lerna + semantic-release
+- refactor to typescript
+- write tests
+- prevent circular references
+- write compiler error system with line and column numbers (will need to have compiler optionally (?) consume raw input in addition to AST)
+- refactor interpreter
+- find a good name for the project
+- consider creating a (simple) electron app as a GUI for non-programmer users
+- offer pre-built binaries for end-users

@@ -12,6 +12,8 @@ export default input => {
     throw new Error('Invalid or empty program')
   }
 
+  // return ast
+
   const commands = compiler(ast)
 
   return commands

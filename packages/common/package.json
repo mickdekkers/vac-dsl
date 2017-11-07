@@ -1,0 +1,12 @@
+{
+  "name": "@vac-dsl/common",
+  "version": "0.1.0",
+  "description": "Shared code between vac-dsl packages",
+  "main": "index.js",
+  "author": "Mick Dekkers",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "ramda": "^0.25.0"
+  }
+}
