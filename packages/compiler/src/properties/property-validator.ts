@@ -1,9 +1,13 @@
-export default class PropertyValidator {
-  constructor(validations) {
-    this.validations = validations
-  }
+export type Validation = [(input: any) => boolean, string]
+export type ValidationResult = {
+  valid: boolean
+  msg: string | null
+}
 
-  validate(input) {
+export default class PropertyValidator {
+  constructor(public validations: Validation[]) {}
+
+  validate(input: any): ValidationResult {
     return this.validations.reduce(
       (acc, validation) => {
         if (acc.valid) {
@@ -18,7 +22,7 @@ export default class PropertyValidator {
 
         return acc
       },
-      { valid: true, msg: null }
+      <ValidationResult>{ valid: true, msg: null }
     )
   }
 }

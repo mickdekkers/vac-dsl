@@ -13,18 +13,21 @@ const nuller = d => null
 const log = d => (console.log(d), d)
 const flatten = arrays => Array.prototype.concat.apply([], arrays)
 const parser = `${pkg.name}@${pkg.version}`
-export interface Token { value: any; [key: string]: any }
+export interface Token {
+  value: any
+  [key: string]: any
+}
 export interface Lexer {
-  reset: (chunk: string, info: any) => void;
-  next: () => Token | undefined;
-  save: () => any;
-  formatError: (token: Token) => string;
-  has: (tokenType: string) => boolean;
+  reset: (chunk: string, info: any) => void
+  next: () => Token | undefined
+  save: () => any
+  formatError: (token: Token) => string
+  has: (tokenType: string) => boolean
 }
 export interface NearleyRule {
-  name: string;
-  symbols: NearleySymbol[];
-  postprocess?: (d: any[], loc?: number, reject?: {}) => any;
+  name: string
+  symbols: NearleySymbol[]
+  postprocess?: (d: any[], loc?: number, reject?: {}) => any
 }
 export type NearleySymbol =
   | string
@@ -334,7 +337,7 @@ export var ParserRules: NearleyRule[] = [
       }
     })
   },
-  { name: 'Statement', symbols: ['VariableDefinition'] },
+  { name: 'Statement', symbols: ['VariableDeclaration'] },
   { name: 'Statement', symbols: ['EdgeChain'] },
   { name: 'Statement', symbols: ['Comment'] },
   { name: 'Comment$ebnf$1', symbols: [] },
@@ -408,7 +411,7 @@ export var ParserRules: NearleyRule[] = [
     postprocess: (d, idx) => ({
       type: 'EdgeChain',
       nodeLists: [d[0]].concat(d[1]),
-      properties: d[2] || [],
+      properties: d[2] || null,
       loc: {
         start: { index: idx }
       }
@@ -494,10 +497,10 @@ export var ParserRules: NearleyRule[] = [
   { name: 'Node', symbols: ['Identifier'] },
   { name: 'Node', symbols: ['Literal'] },
   {
-    name: 'VariableDefinition',
+    name: 'VariableDeclaration',
     symbols: ['Identifier', 'sl_', { literal: '=' }, 'sl_', 'Literal'],
     postprocess: (d, idx) => ({
-      type: 'VariableDefinition',
+      type: 'VariableDeclaration',
       id: d[0],
       value: d[4],
       loc: {
@@ -511,7 +514,7 @@ export var ParserRules: NearleyRule[] = [
     postprocess: (d, idx) => ({
       type: 'Literal',
       value: d[0],
-      location: {
+      loc: {
         start: { index: idx }
       }
     })
@@ -528,7 +531,7 @@ export var ParserRules: NearleyRule[] = [
     postprocess: (d, idx) => ({
       type: 'Identifier',
       name: d[0].join(''),
-      location: {
+      loc: {
         start: { index: idx }
       }
     })

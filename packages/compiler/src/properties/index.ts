@@ -1,4 +1,6 @@
 import didYouMean from 'didyoumean2'
+// Remove this import when Microsoft/TypeScript #9944 is fixed
+import PropertyValidator from './property-validator'
 import samplingRate from './sampling-rate'
 import bitsPerSample from './bits-per-sample'
 import channels from './channels'
@@ -18,7 +20,7 @@ export const propertyValidators = new Map([
 
 export const propertyNames = Array.from(propertyValidators.keys())
 
-export const didYouMeanProperty = input =>
+export const didYouMeanProperty = (input: string): string[] =>
   didYouMean(input, propertyNames, {
     returnType: 'all-sorted-matches'
   }).slice(0, 3)

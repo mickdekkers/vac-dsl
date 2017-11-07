@@ -29,7 +29,7 @@ Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% (d, idx) =>
 
 # TODO: allow comment after statement
 # TODO: create AST node for statements?
-Statement -> VariableDefinition | EdgeChain | Comment
+Statement -> VariableDeclaration | EdgeChain | Comment
 
 Comment -> "#" [^\n]:* {% (d, idx) => ({
   type: "Comment",
@@ -45,7 +45,7 @@ EdgeChain ->
   (sl_ PropertyList {% d => d[1] %}):? {% (d, idx) => ({
     type: 'EdgeChain',
     nodeLists: [d[0]].concat(d[1]),
-    properties: d[2] || [],
+    properties: d[2] || null,
     loc: {
       start: { index: idx }
     }
@@ -79,8 +79,8 @@ NodeList -> Node (delimiter Node {% d => d[1][0] %}):* {% (d, idx) => ({
 }) %}
 Node -> Identifier | Literal
 
-VariableDefinition -> Identifier sl_ "=" sl_ Literal {% (d, idx) => ({
-  type: 'VariableDefinition',
+VariableDeclaration -> Identifier sl_ "=" sl_ Literal {% (d, idx) => ({
+  type: 'VariableDeclaration',
   id: d[0],
   value: d[4],
   loc: {
@@ -91,7 +91,7 @@ VariableDefinition -> Identifier sl_ "=" sl_ Literal {% (d, idx) => ({
 Literal -> dqstring {% (d, idx) => ({
   type: 'Literal',
   value: d[0],
-  location: {
+  loc: {
     start: { index: idx }
   }
 }) %}
@@ -99,7 +99,7 @@ Literal -> dqstring {% (d, idx) => ({
 Identifier -> [a-zA-Z0-9_]:+ {% (d, idx) => ({
   type: 'Identifier',
   name: d[0].join(''),
-  location: {
+  loc: {
     start: { index: idx }
   }
 }) %}

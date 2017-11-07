@@ -4,10 +4,12 @@
   "description": "Shared code between vac-dsl packages",
   "license": "MIT",
   "author": "Mick Dekkers",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
-    "prepublish": "run-s build"
+    "fmt": "yarn run prettier --write \"src/**/*.{ts,js}\"",
+    "prepublish": "run-s build",
+    "prettier": "prettier --single-quote --no-semi"
   },
   "dependencies": {
     "ramda": "^0.25.0"

@@ -6,13 +6,21 @@ import {
   propertyNames,
   didYouMeanProperty
 } from '../properties'
+import { Subset } from '@vac-dsl/core'
+import { Command } from '../command'
+
+export type PropertyObject = { name: string; value: any }
 
 /**
  * Reduce a list of properties to a PascalCase formatted property object
  * @param properties - A list of property objects with `{name, value}` fields
  * @returns An object containing the properties
  */
-const propertiesListToObject = properties => {
+const propertiesListToObject = (
+  properties: PropertyObject[] | null
+): {
+  [name: string]: any
+} => {
   if (properties == null) {
     return {}
   }
@@ -29,31 +37,39 @@ const propertiesListToObject = properties => {
  * @param command - A command object to associate the properties with
  * @returns A command object with a `properties` field containing the properties
  */
-export const assocCommandProperties = R.curry((properties, command) => {
-  const propertiesObject = propertiesListToObject(properties)
+export const assocCommandProperties = R.curry(
+  (
+    properties: PropertyObject[] | null,
+    command: Partial<Command>
+  ): Subset<Command, 'properties'> => {
+    const propertiesObject = propertiesListToObject(properties)
 
-  return R.assoc('properties', propertiesObject, command)
-})
-
-export const validateProperties = properties => {
-  if (properties == null) {
-    return
+    return R.assoc('properties', propertiesObject, command)
   }
+)
 
+/**
+ * Validate a list of properties
+ * @param properties - A list of properties to validate
+ * @throws {Error} Will throw an error if any properties are invalid
+ */
+export const validateProperties = (properties: PropertyObject[]) => {
   properties.forEach(({ name, value }) => {
     // Check name
     if (!propertyNames.includes(name)) {
       const similar = didYouMeanProperty(name)
       const suggestions = similar.length ? similar : propertyNames
 
+      // TODO: don't use dedent here, the .join is fragile
       throw new Error(dedent`
         Property "${name}" doesn't exist. Did you mean one of these?
-        ${suggestions.map(ap => `  - ${ap}`).join('\n        ')}\n
+        ${suggestions.map(entry => `  - ${entry}`).join('\n        ')}\n
       `)
     }
 
     // Check value
-    const validator = propertyValidators.get(name)
+    const validator = propertyValidators.get(name)! // can never be undefined
+
     const { valid, msg } = validator.validate(value)
     if (!valid) {
       throw new Error(`Property ${name} ${msg}`)

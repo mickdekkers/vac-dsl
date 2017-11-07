@@ -3,7 +3,7 @@ import humanizeList from 'humanize-list'
 import PropertyValidator from './property-validator'
 
 const validBps = new Set([8, 16, 18, 20, 22, 24, 32])
-const validBpsString = humanizeList(Array.from(validBps.values()), {
+const validBpsString: string = humanizeList(Array.from(validBps.values()), {
   oxfordComma: true,
   conjunction: 'or'
 })

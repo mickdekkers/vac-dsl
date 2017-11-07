@@ -4,7 +4,7 @@
   "description": "The vac-dsl parser",
   "license": "MIT",
   "author": "Mick Dekkers",
-  "main": "lib/main.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "compile-grammar": "nearleyc src/grammar.ne | run-s -s prettier > src/grammar.ts",

@@ -3,7 +3,7 @@ import humanizeList from 'humanize-list'
 import PropertyValidator from './property-validator'
 
 const validPriorities = new Set(['normal', 'high', 'realtime'])
-const validPrioritiesString = humanizeList(
+const validPrioritiesString: string = humanizeList(
   Array.from(validPriorities.values()).map(x => `"${x}"`),
   {
     oxfordComma: true,
