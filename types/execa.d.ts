@@ -70,9 +70,6 @@ declare namespace execa {
     shellSync(command: string, options?: Options): ExecaReturns
   }
 
-  /**
-   * @see https://nodejs.org/api/child_process.html#child_process_options_stdio
-   */
   type StdIOOption =
     | 'pipe'
     | 'ipc'
@@ -82,10 +79,7 @@ declare namespace execa {
     | null
     | undefined
 
-  // FIXME: SyncOptions = Options but with Options.input = string | Buffer
-  type SyncOptions = Options
-
-  interface Options {
+  interface CommonOptions {
     /**
      * Current working directory of the child process.
      * @default `process.cwd()`
@@ -159,10 +153,6 @@ declare namespace execa {
      */
     localDir?: string
     /**
-     * Write some input to the `stdin` of your binary.
-     */
-    input?: string | Buffer | Stream
-    /**
      * Setting this to `false` resolves the promise with the error instead of rejecting it.
      * @default `true`
      */
@@ -210,6 +200,21 @@ declare namespace execa {
      * @see https://nodejs.org/api/child_process.html#child_process_options_stdio
      */
     stderr?: StdIOOption
+  }
+
+  interface Options extends CommonOptions {
+    /**
+     * Write some input to the `stdin` of your binary.
+     */
+    input?: string | Buffer | Stream
+  }
+
+  interface SyncOptions extends CommonOptions {
+    /**
+     * Write some input to the `stdin` of your binary.
+     * Streams are not allowed when using the synchronous methods.
+     */
+    input?: string | Buffer
   }
 
   interface ExecaReturns {
