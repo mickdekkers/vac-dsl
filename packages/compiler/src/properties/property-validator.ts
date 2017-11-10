@@ -22,7 +22,7 @@ export default class PropertyValidator {
 
         return acc
       },
-      <ValidationResult>{ valid: true, msg: null }
+      { valid: true, msg: null } as ValidationResult
     )
   }
 }

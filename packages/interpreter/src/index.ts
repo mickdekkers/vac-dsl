@@ -1,9 +1,10 @@
-import R from 'ramda'
-import execa from 'execa'
-import _ from 'lodash'
+import * as R from 'ramda'
+import * as execa from 'execa'
+import * as _ from 'lodash'
+import { Command } from '@vac-dsl/core'
 
 // TODO: refactor this
-const runCommand = command => {
+const runCommand = (command: Command): execa.ExecaChildProcess => {
   let args = [
     '/AutoStart',
     `/WindowName: "vac-dsl-${command.hash}"`,
@@ -20,7 +21,7 @@ const runCommand = command => {
 
   // return args
 
-  return execa('audiorepeater', args, { shell: true })
+  return execa('audiorepeater', args, { windowsVerbatimArguments: true })
 }
 
-export default commands => commands.forEach(runCommand)
+export default (commands: Command[]): void => commands.forEach(runCommand)

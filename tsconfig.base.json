@@ -17,7 +17,6 @@
     "noImplicitReturns": true,
 
     /* Module Resolution Options */
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true
+    "moduleResolution": "node"
   }
 }
