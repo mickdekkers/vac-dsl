@@ -1,5 +1,5 @@
-import R from 'ramda'
-import crc32 from 'crc-32'
+import * as R from 'ramda'
+import * as crc32 from 'crc-32'
 import { AST, EdgeChain, Node, NodeList, Command } from '@vac-dsl/core'
 import {
   morph,

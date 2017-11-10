@@ -19,8 +19,6 @@ const runCommand = (command: Command): execa.ExecaChildProcess => {
     )
   )
 
-  // return args
-
   return execa('audiorepeater', args, { windowsVerbatimArguments: true })
 }
 

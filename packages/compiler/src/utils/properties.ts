@@ -1,6 +1,6 @@
-import changeCase from 'change-case'
-import dedent from 'dedent'
-import R from 'ramda'
+import * as changeCase from 'change-case'
+import * as dedent from 'dedent'
+import * as R from 'ramda'
 import {
   propertyValidators,
   propertyNames,

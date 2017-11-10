@@ -1,4 +1,4 @@
-import R from 'ramda'
+import * as R from 'ramda'
 
 export { default as sanityCheck } from './sanity-check'
 export { default as extendableError } from './extendable-error'

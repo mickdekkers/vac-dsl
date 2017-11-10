@@ -1,5 +1,5 @@
-import nearley from 'nearley'
-import grammar from './grammar'
+import * as nearley from 'nearley'
+import * as grammar from './grammar'
 import { AST } from '@vac-dsl/core'
 
 export default () => {
