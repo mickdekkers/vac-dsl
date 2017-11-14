@@ -35,7 +35,7 @@ export const ast: AST = {
       loc: { start: { index: 0 } }
     }
   ],
-  meta: { parser: 'foo' },
+  meta: { },
   loc: { start: { index: 0 } }
 }
 
