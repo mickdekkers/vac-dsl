@@ -1,5 +1,5 @@
-import is from 'is_js'
-import humanizeList from 'humanize-list'
+import * as is from 'is_js'
+import * as humanizeList from 'humanize-list'
 import PropertyValidator from './property-validator'
 
 const validPriorities = new Set(['normal', 'high', 'realtime'])

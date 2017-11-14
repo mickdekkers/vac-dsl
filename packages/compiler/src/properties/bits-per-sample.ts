@@ -1,5 +1,5 @@
-import is from 'is_js'
-import humanizeList from 'humanize-list'
+import * as is from 'is_js'
+import * as humanizeList from 'humanize-list'
 import PropertyValidator from './property-validator'
 
 const validBps = new Set([8, 16, 18, 20, 22, 24, 32])

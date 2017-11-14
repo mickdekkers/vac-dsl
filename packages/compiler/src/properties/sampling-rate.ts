@@ -1,4 +1,4 @@
-import is from 'is_js'
+import * as is from 'is_js'
 import PropertyValidator from './property-validator'
 
 export default new PropertyValidator([

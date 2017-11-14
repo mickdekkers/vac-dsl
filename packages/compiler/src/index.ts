@@ -48,7 +48,7 @@ const resolveCommandValues = R.curry(
     (R.evolve({
       from: resolveValue(variables),
       to: resolveValue(variables)
-    })(command) as any) as Subset<Command, 'from' | 'to'>
+    } as any)(command) as any) as Subset<Command, 'from' | 'to'>
 )
 
 const connectionOf = (from: Node, to: Node): RawCommand => ({ from, to })
@@ -68,7 +68,7 @@ const expandEdgeChain = R.pipe(
   combineAdjacentWith((left: NodeList, right: NodeList) =>
     getConnections(left.nodes, right.nodes)
   ),
-  R.unnest
+  R.unnest as any
 ) as (edgeChain: EdgeChain) => RawCommand[]
 
 // VAC has a limit on the number of characters in a device name
@@ -141,6 +141,6 @@ export default (program: AST): Command[] => {
   // TODO: prevent circular connections
 
   return commands.map(
-    R.pipe(capCommandDeviceNames, addCommandHash)
+    R.pipe(capCommandDeviceNames as any, addCommandHash)
   ) as Command[]
 }

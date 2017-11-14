@@ -5,6 +5,7 @@ export { default as extendableError } from './extendable-error'
 export * from './ast'
 export * from './command'
 
+// TODO: better typings for morph
 /**
  * Morph one object into another, modifying, adding and removing properties
  * according to a spec. This does not mutate the original object.
@@ -16,7 +17,7 @@ export const morph = R.curry(
   (
     spec: { [name: string]: (obj: any) => any },
     data: { [name: string]: any }
-  ): { [name: string]: any } =>
+  ): any =>
     R.pipe(
       R.converge(R.merge, [R.identity, R.applySpec(spec)]),
       // Remove keys whose value equals undefined

@@ -1,4 +1,4 @@
-import didYouMean from 'didyoumean2'
+import * as didYouMean from 'didyoumean2'
 // Remove this import when Microsoft/TypeScript #9944 is fixed
 import PropertyValidator from './property-validator'
 import samplingRate from './sampling-rate'
