@@ -5,6 +5,7 @@
     "fmt": "prettier --write --list-different --single-quote --no-semi \"**/*.?(m)js\" \"!**/.esm-cache/**\" || true"
   },
   "devDependencies": {
+    "git-user-name": "^2.0.0",
     "lerna": "^2.5.1",
     "plop": "^1.9.0"
   },
