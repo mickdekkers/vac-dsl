@@ -9,8 +9,8 @@
     "build": "tsc -p tsconfig.build.json",
     "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
     "prepublish": "run-s build",
-    "prettier": "prettier --single-quote --no-semi",
-    "test": "jest"
+    "test": "jest",
+    "prettier": "prettier --single-quote --no-semi"
   },
   "dependencies": {
     "@vac-dsl/core": "^0.1.0",
@@ -34,6 +34,7 @@
     "ts-jest": "^21.2.2",
     "typescript": "^2.6.1"
   },
+  "private": false,
   "jest": {
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
@@ -47,12 +48,12 @@
       "json"
     ],
     "moduleNameMapper": {
-      "^@vac-dsl/(.*)": "<rootDir>/../$1/src"
+      "^@vac-dsl/([a-z]+(?:[-_][a-z]+)*)$": "<rootDir>/../$1/src",
+      "^@vac-dsl/(.*)$": "<rootDir>/../$1"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!@vac-dsl)"
     ],
     "mapCoverage": true
-  },
-  "private": false
+  }
 }

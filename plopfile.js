@@ -1,6 +1,6 @@
 const gitUsername = require('git-user-name')
 
-const pkgNameRgx = /^(?:@([a-z]+(?:[-_][a-z]+)*)\/)?([a-z]+(?:[-_][a-z]+)*)$/i
+const pkgNameRgx = /^(?:@([a-z]+(?:[-_][a-z]+)*)\/)?([a-z]+(?:[-_][a-z]+)*)$/
 const initialPkgVersion = '0.1.0'
 
 module.exports = plop => {
