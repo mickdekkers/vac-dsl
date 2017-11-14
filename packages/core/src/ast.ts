@@ -1,3 +1,4 @@
+// TODO: allow optional meta field on all ASTNodes
 export interface ASTNode {
   type: string
   loc: {
