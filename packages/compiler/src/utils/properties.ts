@@ -18,7 +18,7 @@ export type PropertyObject = { name: string; value: any }
 const propertiesListToObject = (
   properties: PropertyObject[] | null
 ): {
-  [name: string]: any
+  [key: string]: any
 } => {
   if (properties == null) {
     return {}

@@ -3,6 +3,6 @@ export type Command = {
   to: string
   hash: string
   properties: {
-    [name: string]: string | number
+    [key: string]: string | number
   }
 }

@@ -58,7 +58,7 @@ export type Statement = VariableDeclaration | EdgeChain | Comment
 export interface AST extends ASTNode {
   type: 'Program'
   meta: {
-    parser: string
+    [key: string]: any
   }
   body: Statement[]
 }

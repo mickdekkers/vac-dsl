@@ -12,7 +12,7 @@ import { validateProperties, assocCommandProperties } from './utils/properties'
 type RawCommand = { from: Node; to: Node }
 
 type VariablesMap = {
-  [name: string]: string
+  [key: string]: string
 }
 
 /**

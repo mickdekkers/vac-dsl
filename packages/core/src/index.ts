@@ -15,8 +15,8 @@ export * from './command'
  */
 export const morph = R.curry(
   (
-    spec: { [name: string]: (obj: any) => any },
-    data: { [name: string]: any }
+    spec: { [key: string]: (obj: any) => any },
+    data: { [key: string]: any }
   ): any =>
     R.pipe(
       R.converge(R.merge, [R.identity, R.applySpec(spec)]),
