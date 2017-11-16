@@ -7,14 +7,58 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Test",
-      "program": "${workspaceFolder}/test.js"
+      "name": "test::compiler",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "args": [
+          "-i"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}/packages/compiler",
+      "outFiles": [
+          "${workspaceFolder}/packages/compiler/lib/**/*"
+      ]
     },
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
-      "program": "${workspaceFolder}/index.js"
+      "name": "test::core",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "args": [
+          "-i"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}/packages/core",
+      "outFiles": [
+          "${workspaceFolder}/packages/core/lib/**/*"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "test::interpreter",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "args": [
+          "-i"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}/packages/interpreter",
+      "outFiles": [
+          "${workspaceFolder}/packages/interpreter/lib/**/*"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "test::parser",
+      "program": "${workspaceFolder}/node_modules/jest/bin/jest.js",
+      "args": [
+          "-i"
+      ],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceFolder}/packages/parser",
+      "outFiles": [
+          "${workspaceFolder}/packages/parser/lib/**/*"
+      ]
     }
   ]
 }

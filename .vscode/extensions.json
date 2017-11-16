@@ -1,0 +1,12 @@
+{
+  // See http://go.microsoft.com/fwlink/?LinkId=827846
+  // for the documentation about the extensions.json format
+  // Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+  "recommendations": [
+    "EditorConfig.editorconfig",
+    "esbenp.prettier-vscode",
+    "karyfoundation.nearley",
+    "vilicvane.es-quotes",
+    "wmaurer.change-case"
+  ]
+}

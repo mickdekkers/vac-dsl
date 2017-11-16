@@ -1,0 +1,61 @@
+{
+  "name": "@vac-dsl/parser",
+  "version": "0.1.0",
+  "description": "The vac-dsl parser",
+  "license": "MIT",
+  "author": "Mick Dekkers",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "run-s clean build:tsc",
+    "build:tsc": "tsc -p tsconfig.build.json",
+    "clean": "rimraf lib/*",
+    "compile-grammar": "nearleyc src/grammar.ne | run-s -s prettier > src/grammar.ts",
+    "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
+    "prepublish": "in-publish && run-s compile-grammar build || true",
+    "test": "jest",
+    "prettier": "prettier --single-quote --no-semi"
+  },
+  "dependencies": {
+    "@vac-dsl/core": "^0.1.0",
+    "lodash": "^4.17.4",
+    "nearley": "^2.11.0",
+    "read-pkg-up": "^3.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^21.1.6",
+    "@types/lodash": "^4.14.82",
+    "@types/nearley": "^2.11.0",
+    "@types/node": "^8.0.49",
+    "@types/read-pkg-up": "^2.0.0",
+    "in-publish": "^2.0.0",
+    "jest": "^21.2.1",
+    "npm-run-all": "^4.1.2",
+    "prettier": "^1.8.1",
+    "rimraf": "^2.6.2",
+    "ts-jest": "^21.2.2",
+    "typescript": "^2.6.1"
+  },
+  "private": false,
+  "jest": {
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "moduleNameMapper": {
+      "^@vac-dsl/([a-z]+(?:[-_][a-z]+)*)$": "<rootDir>/../$1/src",
+      "^@vac-dsl/(.*)$": "<rootDir>/../$1",
+      "^@common-fixtures/(.*)$": "<rootDir>/../core/src/__tests__/fixtures/$1"
+    },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!@vac-dsl)"
+    ],
+    "mapCoverage": true
+  }
+}
