@@ -13,21 +13,18 @@ const nuller = d => null
 const log = d => (console.log(d), d)
 const flatten = arrays => Array.prototype.concat.apply([], arrays)
 const parser = `${pkg.name}@${pkg.version}`
-export interface Token {
-  value: any
-  [key: string]: any
-}
+export interface Token { value: any; [key: string]: any }
 export interface Lexer {
-  reset: (chunk: string, info: any) => void
-  next: () => Token | undefined
-  save: () => any
-  formatError: (token: Token) => string
-  has: (tokenType: string) => boolean
+  reset: (chunk: string, info: any) => void;
+  next: () => Token | undefined;
+  save: () => any;
+  formatError: (token: Token) => string;
+  has: (tokenType: string) => boolean;
 }
 export interface NearleyRule {
-  name: string
-  symbols: NearleySymbol[]
-  postprocess?: (d: any[], loc?: number, reject?: {}) => any
+  name: string;
+  symbols: NearleySymbol[];
+  postprocess?: (d: any[], loc?: number, reject?: {}) => any;
 }
 export type NearleySymbol =
   | string
@@ -35,6 +32,33 @@ export type NearleySymbol =
   | { test: (token: any) => boolean }
 export var Lexer: Lexer | undefined = undefined
 export var ParserRules: NearleyRule[] = [
+  { name: '_$ebnf$1', symbols: [] },
+  {
+    name: '_$ebnf$1',
+    symbols: ['_$ebnf$1', 'wschar'],
+    postprocess: d => d[0].concat([d[1]])
+  },
+  {
+    name: '_',
+    symbols: ['_$ebnf$1'],
+    postprocess: function(d) {
+      return null
+    }
+  },
+  { name: '__$ebnf$1', symbols: ['wschar'] },
+  {
+    name: '__$ebnf$1',
+    symbols: ['__$ebnf$1', 'wschar'],
+    postprocess: d => d[0].concat([d[1]])
+  },
+  {
+    name: '__',
+    symbols: ['__$ebnf$1'],
+    postprocess: function(d) {
+      return null
+    }
+  },
+  { name: 'wschar', symbols: [/[ \t\n\v\f]/], postprocess: id },
   { name: 'dqstring$ebnf$1', symbols: [] },
   {
     name: 'dqstring$ebnf$1',
@@ -301,15 +325,9 @@ export var ParserRules: NearleyRule[] = [
     }
   },
   { name: 'Main$ebnf$1', symbols: [] },
-  { name: 'Main$ebnf$1$subexpression$1$ebnf$1', symbols: [{ literal: '\n' }] },
-  {
-    name: 'Main$ebnf$1$subexpression$1$ebnf$1',
-    symbols: ['Main$ebnf$1$subexpression$1$ebnf$1', { literal: '\n' }],
-    postprocess: d => d[0].concat([d[1]])
-  },
   {
     name: 'Main$ebnf$1$subexpression$1',
-    symbols: ['Main$ebnf$1$subexpression$1$ebnf$1', 'Statement'],
+    symbols: ['__', 'Statement'],
     postprocess: d => d[1][0]
   },
   {
@@ -317,18 +335,12 @@ export var ParserRules: NearleyRule[] = [
     symbols: ['Main$ebnf$1', 'Main$ebnf$1$subexpression$1'],
     postprocess: d => d[0].concat([d[1]])
   },
-  { name: 'Main$ebnf$2', symbols: [] },
-  {
-    name: 'Main$ebnf$2',
-    symbols: ['Main$ebnf$2', { literal: '\n' }],
-    postprocess: d => d[0].concat([d[1]])
-  },
   {
     name: 'Main',
-    symbols: ['Statement', 'Main$ebnf$1', 'Main$ebnf$2'],
+    symbols: ['_', 'Statement', 'Main$ebnf$1', '_'],
     postprocess: (d, idx) => ({
       type: 'Program',
-      body: reject(flatten(d), x => x === '\n'), // remove extra newlines
+      body: reject(flatten(d), x => x === null), // remove nulls from whitespace
       meta: {
         parser
       },

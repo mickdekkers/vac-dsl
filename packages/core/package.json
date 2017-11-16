@@ -40,7 +40,8 @@
     ],
     "moduleNameMapper": {
       "^@vac-dsl/([a-z]+(?:[-_][a-z]+)*)$": "<rootDir>/../$1/src",
-      "^@vac-dsl/(.*)$": "<rootDir>/../$1"
+      "^@vac-dsl/(.*)$": "<rootDir>/../$1",
+      "^@common-fixtures/(.*)$": "<rootDir>/../core/src/__tests__/fixtures/$1"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!@vac-dsl)"

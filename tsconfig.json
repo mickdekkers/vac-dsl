@@ -4,6 +4,7 @@
     "baseUrl": "./packages",
     "paths": {
       "@vac-dsl/*": ["./*/src", "./*"],
+      "@common-fixtures/*": ["./core/src/__tests__/fixtures/*"],
       "*": ["../types/*"]
     }
   }

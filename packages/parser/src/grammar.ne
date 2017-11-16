@@ -12,13 +12,14 @@
   const parser = `${pkg.name}@${pkg.version}`
 %}
 
+@builtin "whitespace.ne"
 @builtin "string.ne"
 @builtin "number.ne"
 
-Main -> Statement ("\n":+ Statement {% d => d[1][0] %}):* "\n":* {% (d, idx) =>
+Main -> _ Statement (__ Statement {% d => d[1][0] %}):* _ {% (d, idx) =>
 ({
   type: "Program",
-  body: reject(flatten(d), x => x === '\n'), // remove extra newlines
+  body: reject(flatten(d), x => x === null), // remove nulls from whitespace
   meta: {
 	  parser
   },
