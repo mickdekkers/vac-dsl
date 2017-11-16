@@ -6,7 +6,9 @@
   "author": "Mick Dekkers",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "run-s clean build:tsc",
+    "build:tsc": "tsc -p tsconfig.build.json",
+    "clean": "rimraf lib/*",
     "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
     "prepublish": "in-publish && run-s build || true",
     "test": "jest",
@@ -32,6 +34,7 @@
     "jest": "^21.2.1",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.8.1",
+    "rimraf": "^2.6.2",
     "ts-jest": "^21.2.2",
     "typescript": "^2.6.1"
   },

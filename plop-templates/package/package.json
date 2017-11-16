@@ -6,7 +6,9 @@
   "author": "{{ author }}",
   "main": "lib/index.js",
   "scripts": {
-    "build": "tsc -p tsconfig.build.json",
+    "build": "run-s clean build:tsc",
+    "build:tsc": "tsc -p tsconfig.build.json",
+    "clean": "rimraf lib/*",
     "fmt": "yarn run -s prettier --write --list-different \"src/**/*.{ts,js}\"",
     "prepublish": "in-publish && run-s build || true",
     "test": "jest",
