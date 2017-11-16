@@ -29,7 +29,7 @@ export const ast: AST = {
       loc: { start: { index: 1 } }
     }
   ],
-  meta: { },
+  meta: {},
   loc: { start: { index: 0 } }
 }
 
