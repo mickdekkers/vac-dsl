@@ -6,7 +6,9 @@
   },
   "exclude": [
     "node_modules",
+    "lib",
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/__tests__/*"
   ]
 }
