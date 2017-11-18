@@ -40,6 +40,10 @@
   },
   "private": false,
   "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>(/.+)?/__tests__(/.+)?/fixtures/"
+    ],
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/../../node_modules/ts-jest/preprocessor.js"
     },
