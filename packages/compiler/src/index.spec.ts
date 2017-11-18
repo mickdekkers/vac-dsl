@@ -7,6 +7,25 @@ import * as $basicLiterals from '@common-fixtures/programs/basic-literals'
 import { AST, Command } from '@vac-dsl/core'
 import compiler from './index'
 
+test('returns empty array if no connections are defined', () => {
+  const actual: Command[] = compiler({
+    type: 'Program',
+    body: [
+      {
+        type: 'VariableDeclaration',
+        id: { type: 'Identifier', name: 'a', loc: { start: { index: 0 } } },
+        value: { type: 'Literal', value: 'A', loc: { start: { index: 4 } } },
+        loc: { start: { index: 0 } }
+      }
+    ],
+    meta: {},
+    loc: { start: { index: 0 } }
+  })
+
+  expect(Array.isArray(actual)).toBe(true)
+  expect(actual).toHaveLength(0)
+})
+
 test('compiles program: basic-literals', () => {
   const actual: Command[] = compiler($basicLiterals.ast)
   const expected: Command[] = $basicLiterals.commands
