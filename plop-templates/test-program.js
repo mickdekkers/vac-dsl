@@ -119,13 +119,6 @@ const testProgram = (name, program) => {
   results.incomplete = !results.parsed && !results.parseError
   results.ok = results.parsed && results.compiled
 
-  // Only generate code if the program successfully parsed and compiled
-  // if (results.ok) {
-  //   results.fixtureCode = generateFixtureCode(name, program, results)
-  //   results.parserTestCode = generateParserTestCode(name, program, results)
-  //   results.compilerTestCode = getCompilerTestCode(name, program, results)
-  // }
-
   return results
 }
 
