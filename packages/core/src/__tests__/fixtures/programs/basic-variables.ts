@@ -1,6 +1,6 @@
 import { AST, Command } from '@vac-dsl/core'
 
-export const raw: string = `
+export const program: string = `
 a = "A"
 b = "B"
 a -> b

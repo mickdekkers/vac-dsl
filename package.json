@@ -7,6 +7,7 @@
   "devDependencies": {
     "git-user-name": "^2.0.0",
     "lerna": "^2.5.1",
+    "mz": "^2.7.0",
     "plop": "^1.9.0"
   },
   "private": true,
