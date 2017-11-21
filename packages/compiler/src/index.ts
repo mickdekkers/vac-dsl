@@ -9,6 +9,8 @@ import {
 } from '@vac-dsl/core'
 import { validateProperties, assocCommandProperties } from './utils/properties'
 
+// TODO: move some of the functions in here to utils
+
 type RawCommand = { from: Node; to: Node }
 
 type VariablesMap = {
