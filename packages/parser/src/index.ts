@@ -6,7 +6,10 @@ export default () => {
   const parser = new nearley.Parser(nearley.Grammar.fromCompiled(grammar))
 
   return (input: string): AST | undefined => {
-    // TODO: check for invalid input (e.g. undefined)
+    if (typeof input !== 'string') {
+      throw new TypeError('input must be a string')
+    }
+
     parser.feed(input)
     return parser.results[0]
   }

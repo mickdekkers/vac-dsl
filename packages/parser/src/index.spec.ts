@@ -19,6 +19,23 @@ import * as $basicLiterals from '@common-fixtures/programs/basic-literals'
 import { AST, Command } from '@vac-dsl/core'
 import getParser from './index'
 
+test('throws on invalid input argument', () => {
+  const parser = getParser()
+
+  expect(() => {
+    parser(undefined as any)
+  }).toThrow(/must be a string/)
+  expect(() => {
+    parser(null as any)
+  }).toThrow(/must be a string/)
+  expect(() => {
+    parser(1 as any)
+  }).toThrow(/must be a string/)
+  expect(() => {
+    parser({} as any)
+  }).toThrow(/must be a string/)
+})
+
 test('throws on invalid syntax', () => {
   const parser = getParser()
 
