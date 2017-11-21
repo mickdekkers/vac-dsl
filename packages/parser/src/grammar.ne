@@ -16,6 +16,8 @@
 @builtin "string.ne"
 @builtin "number.ne"
 
+# FIXME: the grammar is ambigious around comments due to arbitrary whitespace:
+# a = "A" # hi b = "B"
 Main -> _ Statement (__ Statement {% d => d[1][0] %}):* _ {% (d, idx) =>
 ({
   type: "Program",

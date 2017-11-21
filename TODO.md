@@ -1,5 +1,6 @@
 - [x] refactor to typescript
 - [ ] write tests
+- [ ] write audio repeater killer that takes a list of window names (or just hashes?) and murders the processes
 - [ ] use lint-staged
 - [ ] use semantic-release
 - [ ] prevent circular references -- Edge case: two different input and output devices have the same name
