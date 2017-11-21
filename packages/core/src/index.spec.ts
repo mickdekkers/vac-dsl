@@ -1,6 +1,9 @@
 import { morph, getCombinationsWith, combineAdjacentWith } from './index'
 
-// TODO: write tests for core
+/*********
+ * morph *
+ *********/
+
 test('morph modifies properties according to spec', () => {
   const foo = {
     a: 'a',
@@ -79,4 +82,38 @@ test('morph does not mutate the input object', () => {
     a: 'a',
     b: 'b'
   })
+})
+
+/***********************
+ * getCombinationsWith *
+ ***********************/
+
+test('getCombinationsWith combines two lists with a combiner function', () => {
+  const combiner = (a, b) => a + b
+
+  const left = ['a', 'b', 'c']
+  const right = ['1', '2', '3']
+
+  const actual = getCombinationsWith(combiner, left, right)
+
+  // prettier-ignore
+  expect(actual).toEqual([
+    'a1', 'a2', 'a3',
+    'b1', 'b2', 'b3',
+    'c1', 'c2', 'c3',
+  ])
+})
+
+/***********************
+ * combineAdjacentWith *
+ ***********************/
+
+test('combineAdjacentWith combines adjacent elements of a list with a combiner function', () => {
+  const combiner = (a, b) => a + b
+
+  const list = ['a', 'b', 'c', 'd']
+
+  const actual = combineAdjacentWith(combiner, list)
+
+  expect(actual).toEqual(['ab', 'bc', 'cd'])
 })
