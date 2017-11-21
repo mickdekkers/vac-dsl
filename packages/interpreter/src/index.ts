@@ -3,7 +3,6 @@ import * as execa from 'execa'
 import * as _ from 'lodash'
 import { Command } from '@vac-dsl/core'
 
-// TODO: refactor this
 const runCommand = (command: Command): execa.ExecaChildProcess => {
   let args = [
     '/AutoStart',
@@ -22,4 +21,5 @@ const runCommand = (command: Command): execa.ExecaChildProcess => {
   return execa('audiorepeater', args, { windowsVerbatimArguments: true })
 }
 
-export default (commands: Command[]): void => commands.forEach(runCommand)
+export default (commands: Command[]): execa.ExecaChildProcess[] =>
+  commands.map(runCommand)
