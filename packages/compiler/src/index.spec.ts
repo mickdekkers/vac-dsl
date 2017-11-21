@@ -1,3 +1,6 @@
+import * as $commentMulti from '@common-fixtures/programs/comment-multi'
+import * as $commentBasic from '@common-fixtures/programs/comment-basic'
+import * as $commentOnly from '@common-fixtures/programs/comment-only'
 import * as $propertiesMulti from '@common-fixtures/programs/properties-multi'
 import * as $multiSharedVariables from '@common-fixtures/programs/multi-shared-variables'
 import * as $propertiesScientificNotation from '@common-fixtures/programs/properties-scientific-notation'
@@ -160,6 +163,27 @@ test('compiles program: multi-shared-variables', () => {
 test('compiles program: properties-multi', () => {
   const actual: Command[] = compiler($propertiesMulti.ast)
   const expected: Command[] = $propertiesMulti.commands
+
+  expect(actual).toEqual(expected)
+})
+
+test('compiles program: comment-only', () => {
+  const actual: Command[] = compiler($commentOnly.ast)
+  const expected: Command[] = $commentOnly.commands
+
+  expect(actual).toEqual(expected)
+})
+
+test('compiles program: comment-basic', () => {
+  const actual: Command[] = compiler($commentBasic.ast)
+  const expected: Command[] = $commentBasic.commands
+
+  expect(actual).toEqual(expected)
+})
+
+test('compiles program: comment-multi', () => {
+  const actual: Command[] = compiler($commentMulti.ast)
+  const expected: Command[] = $commentMulti.commands
 
   expect(actual).toEqual(expected)
 })

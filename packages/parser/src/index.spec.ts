@@ -1,3 +1,6 @@
+import * as $commentMulti from '@common-fixtures/programs/comment-multi'
+import * as $commentBasic from '@common-fixtures/programs/comment-basic'
+import * as $commentOnly from '@common-fixtures/programs/comment-only'
 import * as $propertiesMulti from '@common-fixtures/programs/properties-multi'
 import * as $multiSharedVariables from '@common-fixtures/programs/multi-shared-variables'
 import * as $propertiesScientificNotation from '@common-fixtures/programs/properties-scientific-notation'
@@ -191,6 +194,30 @@ test('parses program: properties-multi', () => {
   const parser = getParser()
   const actual: AST | undefined = parser($propertiesMulti.program)
   const expected: AST = $propertiesMulti.ast
+
+  expect(actual).toMatchObject(expected)
+})
+
+test('parses program: comment-only', () => {
+  const parser = getParser()
+  const actual: AST | undefined = parser($commentOnly.program)
+  const expected: AST = $commentOnly.ast
+
+  expect(actual).toMatchObject(expected)
+})
+
+test('parses program: comment-basic', () => {
+  const parser = getParser()
+  const actual: AST | undefined = parser($commentBasic.program)
+  const expected: AST = $commentBasic.ast
+
+  expect(actual).toMatchObject(expected)
+})
+
+test('parses program: comment-multi', () => {
+  const parser = getParser()
+  const actual: AST | undefined = parser($commentMulti.program)
+  const expected: AST = $commentMulti.ast
 
   expect(actual).toMatchObject(expected)
 })
