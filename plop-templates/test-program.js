@@ -128,5 +128,3 @@ module.exports = {
   generateParserTestCode,
   generateCompilerTestCode
 }
-
-testProgram('basic', '"a" -> "b"')
