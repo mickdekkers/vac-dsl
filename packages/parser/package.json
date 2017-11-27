@@ -2,7 +2,7 @@
   "name": "@vac-dsl/parser",
   "version": "0.1.0",
   "description": "The vac-dsl parser",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Mick Dekkers",
   "main": "lib/index.js",
   "scripts": {

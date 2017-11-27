@@ -21,6 +21,9 @@ module.exports = plop => {
   // get a package's unscoped package name from its raw name
   plop.setHelper('unscope', text => text.match(pkgNameRgx)[2])
 
+  // get the current year
+  plop.setHelper('currentYear', () => new Date().getFullYear())
+
   // create package
   plop.setGenerator('package', {
     description: 'create a new @vac-dsl package',
@@ -65,6 +68,11 @@ module.exports = plop => {
         destination: 'packages/{{kebabCase (unscope name)}}',
         templateFiles: ['plop-templates/package/**/*'],
         base: 'plop-templates/package'
+      },
+      {
+        type: 'add',
+        path: 'packages/{{kebabCase (unscope name)}}/LICENSE',
+        templateFile: 'plop-templates/package/LICENSE'
       }
     ]
   })

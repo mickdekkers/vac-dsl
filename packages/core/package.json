@@ -2,7 +2,7 @@
   "name": "@vac-dsl/core",
   "version": "0.1.0",
   "description": "Shared code between vac-dsl packages",
-  "license": "MIT",
+  "license": "Apache-2.0",
   "author": "Mick Dekkers",
   "main": "lib/index.js",
   "scripts": {
