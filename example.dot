@@ -3,7 +3,7 @@ digraph G {
     label="Inputs"
     style=dashed
 
-    vd[label="Virtual Default\n(game audio)", shape=invhouse]
+    vd[label="Virtual Default\n(other audio)", shape=invhouse]
     vc[label="Virtual Chat\n(chat audio)", shape=invhouse]
   }
 
@@ -17,6 +17,5 @@ digraph G {
     headset[label="Headset", shape=house]
   }
 
-  vd, vc -> vm -> headset
-  vc -> speakers
+  vd:s, vc:s -> vm -> headset:n
 }

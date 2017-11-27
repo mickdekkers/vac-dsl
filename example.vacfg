@@ -1,0 +1,12 @@
+# This is the configuration I'm currently using on my PC
+# See also: example.dot, example.png
+
+# Create variables for all relevant audio devices
+vd = "Virtual Default (Virtual Audio Cable)"
+vc = "Virtual Chat (Virtual Audio Cable)"
+vm = "Virtual Mixer (Virtual Audio Cable)"
+speakers = "Acer X34-8 (NVIDIA High Definition Audio)"
+headset = "Realtek Digital Output (Realtek High Definition Audio)"
+
+# Route them with some properties on the connections
+vd, vc -> vm -> headset [sampling_rate=96000, buffer_ms=100, priority="high"]
