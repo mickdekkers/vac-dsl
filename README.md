@@ -51,7 +51,7 @@ I'm learning a lot about language design and implementation, and it's surprising
 
 ## License
 
-This project is licensed under the [Apache 2.0 license](LICENSE).
+This project is licensed under the [Apache 2 open-source license](LICENSE).
 
 _I am not affiliated with Eugene Muzychenko or the Virtual Audio Cable software.
 The vac-dsl project merely provides an easy-to-use interface around VAC's publicly documented command-line API. All rights belong to their respective owners._
