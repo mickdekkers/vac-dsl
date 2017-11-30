@@ -27,7 +27,7 @@ Main -> _ Statement (__ Statement {% d => ({
 })%}):* _ {% (d, idx) => ({
 	type: "Program",
     body: [d[1]].concat(d[2].map(x => x.value)),
-    meta: {},
+    meta: { parser },
 	loc: getLoc(idx, plen(d[0]) + len(d[1]) + d[2].reduce((sum, x) => sum + x.length, 0) + plen(d[3]))
 }) %}
 
