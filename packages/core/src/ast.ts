@@ -1,5 +1,5 @@
 // TODO: allow optional meta field on all ASTNodes
-export interface ASTNode {
+export interface ASTBase {
   type: string
   loc: {
     start: {
@@ -8,17 +8,17 @@ export interface ASTNode {
   }
 }
 
-export interface Literal extends ASTNode {
+export interface Literal extends ASTBase {
   type: 'Literal'
   value: string
 }
 
-export interface Identifier extends ASTNode {
+export interface Identifier extends ASTBase {
   type: 'Identifier'
   name: string
 }
 
-export interface VariableDeclaration extends ASTNode {
+export interface VariableDeclaration extends ASTBase {
   type: 'VariableDeclaration'
   id: Identifier
   value: Literal
@@ -26,29 +26,29 @@ export interface VariableDeclaration extends ASTNode {
 
 export type Node = Identifier | Literal
 
-export interface NodeList extends ASTNode {
+export interface NodeList extends ASTBase {
   type: 'NodeList'
   nodes: Node[]
 }
 
-export interface Property extends ASTNode {
+export interface Property extends ASTBase {
   type: 'Property'
   name: string
   value: string | number
 }
 
-export interface PropertyList extends ASTNode {
+export interface PropertyList extends ASTBase {
   type: 'PropertyList'
   properties: Property[]
 }
 
-export interface EdgeChain extends ASTNode {
+export interface EdgeChain extends ASTBase {
   type: 'EdgeChain'
   nodeLists: NodeList[]
   properties: PropertyList | null
 }
 
-export interface Comment extends ASTNode {
+export interface Comment extends ASTBase {
   type: 'Comment'
   value: string
   raw: string
@@ -56,10 +56,20 @@ export interface Comment extends ASTNode {
 
 export type Statement = VariableDeclaration | EdgeChain | Comment
 
-export interface AST extends ASTNode {
+export interface AST extends ASTBase {
   type: 'Program'
   meta: {
     [key: string]: any
   }
   body: Statement[]
 }
+
+export type ASTNode =
+  | AST
+  | Comment
+  | EdgeChain
+  | Identifier
+  | Literal
+  | Property
+  | PropertyList
+  | VariableDeclaration

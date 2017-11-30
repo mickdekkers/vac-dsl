@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`traverse accepts aliases 1`] = `
+Array [
+  "EdgeChain",
+]
+`;
+
+exports[`traverse accepts aliases 2`] = `
+Array [
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "EdgeChain",
+]
+`;
+
+exports[`traverse accepts aliases 3`] = `
+Array [
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "EdgeChain",
+  "EdgeChain",
+]
+`;
+
+exports[`traverse invokes all matching visitors for each node type 1`] = `
+Array [
+  "Program",
+  "EdgeChain",
+  "EdgeChain",
+  "EdgeChain",
+  "NodeList",
+  "Literal",
+  "NodeList",
+  "Literal",
+]
+`;
+
+exports[`traverse invokes all matching visitors for each node type 2`] = `
+Array [
+  "Program",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "EdgeChain",
+  "EdgeChain",
+  "EdgeChain",
+  "NodeList",
+  "Identifier",
+  "Identifier",
+  "Identifier",
+  "NodeList",
+  "Identifier",
+  "Identifier",
+  "NodeList",
+  "Identifier",
+  "Identifier",
+  "Identifier",
+]
+`;
+
+exports[`traverse invokes all matching visitors for each node type 3`] = `
+Array [
+  "Program",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "VariableDeclaration",
+  "VariableDeclaration",
+  "Identifier",
+  "Literal",
+  "EdgeChain",
+  "EdgeChain",
+  "EdgeChain",
+  "NodeList",
+  "Identifier",
+  "NodeList",
+  "Identifier",
+  "PropertyList",
+  "Property",
+  "EdgeChain",
+  "EdgeChain",
+  "EdgeChain",
+  "NodeList",
+  "Identifier",
+  "NodeList",
+  "Identifier",
+  "PropertyList",
+  "Property",
+]
+`;
+
+exports[`traverse visits all nodes in order when using * catch-all 1`] = `
+"Program
+  EdgeChain
+    NodeList
+      Literal
+    NodeList
+      Literal
+"
+`;
+
+exports[`traverse visits all nodes in order when using * catch-all 2`] = `
+"Program
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  EdgeChain
+    NodeList
+      Identifier
+      Identifier
+      Identifier
+    NodeList
+      Identifier
+      Identifier
+    NodeList
+      Identifier
+      Identifier
+      Identifier
+"
+`;
+
+exports[`traverse visits all nodes in order when using * catch-all 3`] = `
+"Program
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  VariableDeclaration
+    Identifier
+    Literal
+  EdgeChain
+    NodeList
+      Identifier
+    NodeList
+      Identifier
+    PropertyList
+      Property
+  EdgeChain
+    NodeList
+      Identifier
+    NodeList
+      Identifier
+    PropertyList
+      Property
+"
+`;
