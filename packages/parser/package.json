@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@vac-dsl/core": "^0.1.0",
+    "line-column": "^1.0.2",
     "lodash": "^4.17.4",
     "nearley": "^2.11.0",
     "read-pkg-up": "^3.0.0"

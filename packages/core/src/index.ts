@@ -4,6 +4,7 @@ export { default as sanityCheck } from './sanity-check'
 export { default as extendableError } from './extendable-error'
 export * from './ast'
 export * from './command'
+export * from './traverse'
 
 // TODO: better typings for morph
 /**

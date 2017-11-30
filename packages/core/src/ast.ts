@@ -4,7 +4,16 @@ export interface ASTBase {
   loc: {
     start: {
       index: number
+      line: number
+      column: number
     }
+    // TODO: update test fixtures with end locations
+    end?: {
+      index: number
+      line: number
+      column: number
+    }
+    length?: number
   }
 }
 
