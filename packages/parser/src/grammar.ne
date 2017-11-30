@@ -2,11 +2,7 @@
 @preprocessor typescript
 
 @{%
-  const { reject } = require('lodash')
   const pkg = require('read-pkg-up').sync().pkg
-
-  // This is apparently not as "built-in" as the docs suggest
-  const nuller = d => null
 
   const getLoc = (start, length) => ({
     start: { index: start },
@@ -17,30 +13,27 @@
   const len = d => d && d.loc && d.loc.length ? d.loc.length : 0
   // get "primitive" (non-ast node) length
   const plen = d => d && d.length ? d.length: 0
+
   const log = d => (console.log(d), d)
-  const flatten = arrays => Array.prototype.concat.apply([], arrays)
+
   const parser = `${pkg.name}@${pkg.version}`
 %}
 
 # FIXME: the grammar is ambiguous around comments due to arbitrary whitespace:
 # a = "A" # hi b = "B"
-# TODO: getLoc for Main
-Main -> _ Statement (__ Statement {% d => d[1][0] %}):* _ {% (d, idx) =>
-({
-  type: "Program",
-  body: reject(flatten(d), x => x === null), // remove nulls from whitespace
-  meta: {
-	  parser
-  },
-  loc: {
-    start: { index: idx }
-  }
+Main -> _ Statement (__ Statement {% d => ({
+  value: d[1],
+  length: plen(d[0]) + len(d[1])
+})%}):* _ {% (d, idx) => ({
+	type: "Program",
+    body: [d[1]].concat(d[2].map(x => x.value)),
+    meta: {},
+	loc: getLoc(idx, plen(d[0]) + len(d[1]) + d[2].reduce((sum, x) => sum + x.length, 0) + plen(d[3]))
 }) %}
 
 # TODO: allow comment after statement
 # TODO: create AST node for statements?
-# TODO: unnest like Node
-Statement -> VariableDeclaration | EdgeChain | Comment
+Statement -> (VariableDeclaration | EdgeChain | Comment) {% d => d[0][0] %}
 
 Comment -> "#" [^\n]:* {% (d, idx) => ({
   type: "Comment",
@@ -49,16 +42,19 @@ Comment -> "#" [^\n]:* {% (d, idx) => ({
   loc: getLoc(idx, 1 + d[1].length)
 }) %}
 
-# TODO: getLoc for EdgeChain
 EdgeChain ->
-  NodeList (sl_ "->" sl_ NodeList {% d => d[3] %}):+
-  (sl_ PropertyList {% d => d[1] %}):? {% (d, idx) => ({
+  NodeList (sl_ "->" sl_ NodeList {% d => ({
+      value: d[3],
+      length: plen(d[0]) + 2 + plen(d[2]) + len(d[3])
+    })%}):+
+  (sl_ PropertyList {% d => ({
+      value: d[1],
+      length: plen(d[0]) + len(d[1])
+    })%}):? {% (d, idx) => ({
     type: 'EdgeChain',
-    nodeLists: [d[0]].concat(d[1]),
-    properties: d[2] || null,
-    loc: {
-      start: { index: idx }
-    }
+    nodeLists: [d[0]].concat(d[1].map(x => x.value)),
+    properties: d[2] ? d[2].value : null,
+    loc: getLoc(idx, len(d[0]) + d[1].reduce((sum, x) => sum + x.length, 0) + (d[2] ? d[2].length : 0))
   }) %}
 
 PropertyList -> "["
