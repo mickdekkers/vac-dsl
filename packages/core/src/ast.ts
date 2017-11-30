@@ -56,7 +56,7 @@ export interface Comment extends ASTBase {
 
 export type Statement = VariableDeclaration | EdgeChain | Comment
 
-export interface AST extends ASTBase {
+export interface Program extends ASTBase {
   type: 'Program'
   meta: {
     [key: string]: any
@@ -64,12 +64,14 @@ export interface AST extends ASTBase {
   body: Statement[]
 }
 
+export type AST = Program
+
 export type ASTNode =
-  | AST
   | Comment
   | EdgeChain
   | Identifier
   | Literal
+  | Program
   | Property
   | PropertyList
   | VariableDeclaration
